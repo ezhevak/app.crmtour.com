@@ -8,4 +8,13 @@ www - новая версия ситемы <br/>
 
 
 # Установка crmtour.com 
-1. Используя phpMyAdmin импортируем структуру базы данных /app/mysql/crmtour.sql
+1. Используя phpMyAdmin импортируем структуру базы данных 
+- /app/mysql/01.tables.sql
+- /app/mysql/02.functions.sql
+- /app/mysql/03.procedures.sql
+- /app/mysql/04.vuews.sql
+
+2. В файл /app/connection.php прописываем параметры подключения
+3. в файле .htaccess заменяем https://example.com/$1  на реальную ссылку вашего сайта
+
+Готово
