@@ -63,7 +63,7 @@
 	}
 ?>
 			<div class="loginmodal-container block_shadow_box" <?php if ($ReadOnly != "") echo "style='display:none';";?>>
-				<h1>CRM Tour</h1><br>
+				<h1><a href="https://crmtour.com">CRM Tour</a></h1><br>
 				<h3>Регистрация</h3>
 				<?php 
 				

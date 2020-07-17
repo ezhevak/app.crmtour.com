@@ -61,7 +61,7 @@
 
                 <div>
                   <h1><i class="fa fa-paw"></i> CRM Tour</h1>
-                  <p>©2016 CRM Tour - работайте со своими клиентами легко и эффективно</p>
+                  <p>©2016 <a href="https://crmtour.com">CRM Tour</a> - работайте со своими клиентами легко и эффективно</p>
                 </div>
               </div>
             </form>
@@ -122,7 +122,7 @@
 
                 <div>
                   <h1><i class="fa fa-paw"></i> CRM Tour</h1>
-                  <p>©2016 CRM Tour - работайте со своими клиентами легко и эффективно</p>
+                  <p>©2016 <a href="https://crmtour.com">CRM Tour</a> - работайте со своими клиентами легко и эффективно</p>
                 </div>
               </div>
             </form>
@@ -156,7 +156,7 @@
 
                 <div>
                   <h1><i class="fa fa-paw"></i> CRM Tour</h1>
-                  <p>©2016 CRM Tour - работайте со своими клиентами легко и эффективно</p>
+                  <p>©2016 <a href="https://crmtour.com">CRM Tour</a> - работайте со своими клиентами легко и эффективно</p>
                 </div>
               </div>
             </form>
@@ -276,12 +276,12 @@
 	</script>
 	
 	
-	<script src='https://www.google.com/recaptcha/api.js?render=6LdNKeYUAAAAAFYLosLWmhA3swwV9hAen-Sr3mme&onload=onloadCallback&render=explicit'></script>
+	<script src='https://www.google.com/recaptcha/api.js?render=&onload=onloadCallback&render=explicit'></script>
 	
 	<script>
 	      function onloadCallback() {
 	      grecaptcha.ready(function() {
-	        grecaptcha.execute('6LdNKeYUAAAAAFYLosLWmhA3swwV9hAen-Sr3mme', {
+	        grecaptcha.execute('', {
 	          action: 'login'
 	        }).then(function (token) {
 	          var recaptchaResponseLogin = document.getElementById('recaptcha_response_login');
