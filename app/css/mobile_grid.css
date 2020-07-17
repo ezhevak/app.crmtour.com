@@ -1,0 +1,80 @@
+
+@media 
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1000px)  {
+
+	/* Force table to not be like tables anymore */
+	table, thead, tbody, th, td, tr { 
+		display: block; 
+	}
+	
+	/* Hide table headers (but not display: none;, for accessibility) */
+	thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+	
+	tr { border: 1px solid #ccc; }
+	
+	td { 
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 50%; 
+	}
+	
+	td:before { 
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+	}
+	
+	/*
+	Label the data
+	*/
+/*	.ui-jqgrid-btable tbody tr td:nth-of-type(1):before { content: "Id";position: initial; width: 200px;display: inline-block;border-right: 1px solid #ddd;}
+	.ui-jqgrid-btable tbody tr td:nth-of-type(2):before { content: "Тип";position: initial; width: 200px;display: inline-block;border-right: 1px solid #ddd;}
+	.ui-jqgrid-btable tbody tr td:nth-of-type(3):before { content: "Подтип";position: initial; width: 200px;display: inline-block;border-right: 1px solid #ddd;}
+	.ui-jqgrid-btable tbody tr td:nth-of-type(4):before { content: "Значение"; position: initial;width: 200px;display: inline-block;border-right: 1px solid #ddd;}
+	.ui-jqgrid-btable tbody tr td:nth-of-type(5):before { content: "Язык";position: initial; width: 200px;display: inline-block;border-right: 1px solid #ddd;}
+	.ui-jqgrid-btable tbody tr td:nth-of-type(6):before { content: "Код значения"; position: initial;width: 200px;display: inline-block;border-right: 1px solid #ddd;}
+	.ui-jqgrid-btable tbody tr td:nth-of-type(7):before { content: "Порядок сортировки"; position: initial;width: 200px;display: inline-block;border-right: 1px solid #ddd;}
+	td:nth-of-type(8):before { content: "Активно"; position: initial;width: 200px;display: inline-block;border-right: 1px solid #ddd;}*/
+	.ui-jqgrid-btable tbody tr td {
+		text-align: left !important;
+	}
+	.ui-jqgrid-hbox table {
+		width: 100%;
+	}
+	.ui-jqgrid-hbox table thead tr {
+		position: initial;
+	}
+	.ui-jqgrid-hbox table thead tr th {
+		width: 200px !important;
+		text-align: left !important;
+	}
+	.ui-jqgrid-btable {
+		width: 100% !important;
+	}
+	.ui-search-toolbar {
+		display: none;
+	}
+	
+	.ui-pg-table tbody tr td {
+		display: initial;
+	}
+	.ui-jqgrid .ui-pg-table td {
+		padding: 0px;
+	}
+	.jqgfirstrow {
+		display: none;
+	}
+}
+	</style>

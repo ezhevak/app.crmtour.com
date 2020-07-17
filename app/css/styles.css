@@ -1,0 +1,424 @@
+
+/*Таблица список Leads*/
+/*@import url('/css/leads.css');*/
+
+
+/*@import url('/css/contacts.css');*/
+
+/*Жевак попробовал сделать интерфейс интерестней.
+
+.container-fluid {
+    font-size: 1.1em;
+    font-family: roboto;
+}
+.container {
+    font-size: 1.1em;
+    font-family: roboto;
+}
+
+.btn-sm {
+    background-color: #357ae8;
+    border-radius: 1px;
+}
+.input-sm {
+    border-radius: 1px;
+}
+.ui-jqgrid>.ui-jqgrid-view *, .ui-jqgrid>.ui-jqgrid-view :after, .ui-jqgrid>.ui-jqgrid-view :before {
+    border-radius: 1px;
+}
+Жевак попробовал сделать интерфейс интерестней.*/
+
+/*body {
+	font-family: roboto;
+}*/
+
+/*.input-sm {
+  height: 22px;
+  padding: 2px 5px;
+  font-size: 12px;
+  line-height: 1.5; 
+  border-radius: 3px;
+}*/
+
+
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i');
+
+body{
+  font-family: roboto;
+}
+
+/*Глобальный класс для подсветки значенией в grid*/
+.glogal-status-row-important {
+    background: #adc9d2 !important;
+}
+
+.glogal-status-row-urgent {
+    background: #f1c2c2 !important; /*#d08473*/
+}
+
+.crm_nav {
+	border-radius: 0px;
+}
+.crm_tab_btns {
+	padding-bottom: 5px;
+}
+.crm_tab_btns_div {
+	margin-bottom: 5px;
+	margin-top: 5px;
+}
+/**** JQGRID ****/
+.ui-jqgrid.ui-jqgrid-bootstrap > .ui-jqgrid-view {
+	font-size: 14px;
+}
+.ui-jqgrid .ui-jqgrid-htable th {
+	padding: 5px 2px;
+}
+.ui-search-input .form-control {
+	height: 22px;
+}
+.ui-jqgrid.ui-jqgrid-bootstrap .ui-jqgrid-hdiv, .ui-jqgrid.ui-jqgrid-bootstrap .ui-jqgrid-legacy-subgrid > thead {
+	background-color: #ffffff;
+}
+.ui-jqgrid.ui-jqgrid-bootstrap tr.jqfoot > td, .ui-jqgrid.ui-jqgrid-bootstrap tr.jqgroup > td, .ui-jqgrid.ui-jqgrid-bootstrap tr.jqgrow > td {
+	padding: 3px 8px;
+}
+.ui-search-toolbar .ui-search-table {
+	padding: 4px;
+}
+.ui-jqgrid > .ui-jqgrid-view a.btn {
+	font-size: 11px;
+}
+.ui-jqgrid > .ui-jqgrid-view a {
+	text-decoration: none;
+}
+.ui-search-clear .clearsearchclass, .ui-search-oper .soptclass {
+	font-size: 14px !important;
+}
+/*.jqgfirstrow > td {
+	padding: 0px;
+}*/
+/**** ~JQGRID ****/
+
+/**** LOADER ****/
+#loader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 9999;
+  width: 150px;
+  height: 150px;
+  margin: -75px 0 0 -75px;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Add animation to "page content" */
+.animate-bottom {
+  position: relative;
+  -webkit-animation-name: animatebottom;
+  -webkit-animation-duration: 1s;
+  animation-name: animatebottom;
+  animation-duration: 1s
+}
+
+@-webkit-keyframes animatebottom {
+  from { bottom:-100px; opacity:0 }
+  to { bottom:0px; opacity:1 }
+}
+
+@keyframes animatebottom {
+  from{ bottom:-100px; opacity:0 }
+  to{ bottom:0; opacity:1 }
+}
+
+#myDiv {
+  display: none;
+  text-align: center;
+}
+/**** ~LOADER ****/
+
+.alert {
+	z-index: 999;
+	padding: 6px;
+	margin-bottom: 0px;
+	display: none;
+	position: fixed;
+	left: auto;
+}
+
+.tooltip {
+	z-index: 999;
+}
+
+.dropdown-submenu {
+    position:relative;
+}
+.dropdown-submenu>.dropdown-menu {
+    top:0;
+    left:100%;
+    margin-top:-6px;
+    margin-left:-1px;
+    -webkit-border-radius:0 6px 6px 6px;
+    -moz-border-radius:0 6px 6px 6px;
+    border-radius:0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+    display:block;
+}
+.dropdown-submenu>a:after {
+    display:block;
+    content:" ";
+    float:right;
+    width:0;
+    height:0;
+    border-color:transparent;
+    border-style:solid;
+    border-width:5px 0 5px 5px;
+    border-left-color:#cccccc;
+    margin-top:5px;
+    margin-right:-10px;
+}
+.dropdown-submenu:hover>a:after {
+    border-left-color:#ffffff;
+}
+.dropdown-submenu.pull-left {
+    float:none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+    left:-100%;
+    margin-left:10px;
+    -webkit-border-radius:6px 0 6px 6px;
+    -moz-border-radius:6px 0 6px 6px;
+    border-radius:6px 0 6px 6px;
+}
+
+#photoadd, #delphoto{ 
+	display: none;
+	font-size: 24px;
+	padding-top: 3px;
+}
+#linkFileUpload:hover #photoadd{
+	display : block;
+	float: left;
+	position: absolute;
+	left: 75px;
+	top: 80px;
+	z-index: 1000;
+	/*padding: 5px;*/
+	/*color: #FFFFFF;*/
+	font-weight: bold;
+	/*text-align: center;
+	vertical-align: middle;*/
+}
+
+#delphotolink:hover #delphoto{
+	display : block;
+	float: left;
+	position: absolute;
+	left: 75px;
+	top: 80px;
+	z-index: 1000;
+	/*padding: 5px;*/
+	/*color: #FFFFFF;*/
+	font-weight: bold;
+	/*text-align: center;
+	vertical-align: middle;*/
+}
+
+.round {
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    line-height: 30px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    background-color: #222;    
+    color: #FFF;
+    text-align: center;  
+}
+.round.hollow {
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    line-height: 30px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    background-color: #FFF;    
+    color: #222;
+    text-align: center;
+    -webkit-box-shadow: 0px 0px 0px 3px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 0px 3px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 0px 3px rgba(0,0,0,0.75);
+}
+
+.round.round-sm {
+    height: 20px;
+    width: 20px;
+    line-height: 20px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    font-size: 0.7em;
+}
+.round.round-lg {
+    height: 40px;
+    width: 40px;
+    line-height: 40px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    font-size: 1.5em;
+}
+
+.round.blue {
+    background-color: #3EA6CE;
+}
+
+.round.orange {
+    background-color: #FF6701;
+}
+
+.round.green {
+    background-color: #42A129;
+}
+
+.round.hollow.blue {
+    color: #3EA6CE;   
+    background-color: #FFF;    
+    -webkit-box-shadow: 0px 0px 0px 3px #3EA6CE;
+    -moz-box-shadow: 0px 0px 0px 3px #3EA6CE;
+    box-shadow: 0px 0px 0px 3px #3EA6CE;
+}
+
+.round.hollow.orange {
+    color: #FF6701;
+    background-color: #FFF;    
+    -webkit-box-shadow: 0px 0px 0px 3px #FF6701;
+    -moz-box-shadow: 0px 0px 0px 3px #FF6701;
+    box-shadow: 0px 0px 0px 3px #FF6701;
+}
+
+.round.hollow.green {
+    color: #42A129;
+    background-color: #FFF;    
+    -webkit-box-shadow: 0px 0px 0px 3px #42A129;
+    -moz-box-shadow: 0px 0px 0px 3px #42A129;
+    box-shadow: 0px 0px 0px 3px #42A129;
+}
+
+.crm_tab_btns > div > form, .crm_tab_btns > div > button {
+	float: left;
+	padding-right: 10px;
+}
+.crm_tab_btns > div > a {
+	margin-left: 10px;
+}
+/*коректировка высоты календаря*/
+.input-group-addon{
+    font-size: 13px;
+}
+.task_model_link {
+	text-decoration: underline;
+	color: darkslateblue;
+}
+.gridSearchBtn, .btntoolbar {
+	margin-left: 10px;
+}
+
+.btn-file input[type="file"] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    text-align: right;
+    opacity: 0;
+    background: none repeat scroll 0 0 transparent;
+    cursor: inherit;
+    display: block;
+}
+
+/*#OperatorName > .select2{*/
+.select2.select2-container{
+	width:100% !important;
+}
+.select2-container--default .select2-selection--multiple, .select2-container--default .select2-selection--single {
+    min-height: 30px;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: unset;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+   height: 24px;
+}
+.picklist {
+    margin-right: 30px;
+}
+/*
+tr.jqgrow>td.textInDiv>div {
+            max-height: 20px;
+            overflow: hidden;
+        }
+        td.form-view-data>span>div {
+            max-height: 150px;
+            overflow: auto
+        }
+        
+*/
+.form-control .DataTD:has(span>div) {
+	height: unset !important;
+}
+
+.form-group .btn {
+    margin-bottom: 0px;
+}
+/*.toggle {
+    padding-top: 9px;
+}
+*/
+
+/*Жевак закоментировал, для отображения toggle*/
+/*.toggle a {
+    color: #ECF0F1;
+}
+*/
+/*
+#mCSB_1 {
+	width: 100%;
+}*/
+/*
+.nav-md .container.body .right_col {
+    margin-left: 176px;
+}
+.main_container .top_nav {
+    margin-left: 176px;
+}*/
+.tile_stats_count .count {
+    font-size: 27px;
+    background-color: rgb(234, 234, 252);
+}
+
+/*.bootstrap-datetimepicker-widget {
+	z-index: 9999 !important;
+}*/
+.table-responsive {
+  overflow: visible !important;
+}
+
+/*Добавлено для отображения белого текста*/
+.label {
+    color: #fff !important;
+}

@@ -1,0 +1,1 @@
+http://vitalets.github.io/x-editable/docs.html
