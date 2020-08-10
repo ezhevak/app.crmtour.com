@@ -11,4 +11,5 @@
 	$GLOBALS['MailUser'] ='';
 	$GLOBALS['MailPass'] ='';
 	$GLOBALS['Email'] ='';	
+	$GLOBALS['recaptchaSecret'] ='';
 ?>
