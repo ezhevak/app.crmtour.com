@@ -74,7 +74,6 @@ function recordowner($RecUserId){
 }
 
 
-
 function appsendmail($address,$subject,$body) {
 
 	require_once $GLOBALS['RootDir'].'vendor/phpmailer/PHPMailerAutoload.php';
@@ -82,14 +81,14 @@ function appsendmail($address,$subject,$body) {
 	$mail = new PHPMailer;
 
 	$mail->isSMTP();
-	$mail->Host = 'mail.ukraine.com.ua';
+	$mail->Host = $GLOBALS['MailHost'];
 	$mail->SMTPAuth = true;
-	$mail->Username = 'info@crmtour.com';
-	$mail->Password = 'o7yyZ50dVTM1';
+	$mail->Username = $GLOBALS['MailUser'];
+	$mail->Password = $GLOBALS['MailPass'];
 	$mail->Port = 25;
 	$mail->CharSet = 'UTF-8';
 
-	$mail->setFrom('info@crmtour.com', 'CRM Tour');
+	$mail->setFrom($GLOBALS['Email'], 'CRM Tour');
 	//zhevak заменил значение на вхлдящую переменну для отправки сообщений на определённый адрес получателя
 	//http://178.150.16.80:3000/issues/36
 	$mail->addAddress($address);
@@ -518,7 +517,8 @@ function getAdminUserEmail() {
 		$isValidCaptcha = false;
 		
 		$url = 'https://www.google.com/recaptcha/api/siteverify';
-        $secret = '6LdNKeYUAAAAACT8Nk_KlZrE1_pNQS3MstN_gF5L';
+		
+        $secret = $GLOBALS['recaptchaSecret'];
         $recaptcha_response = $response;
         
         
