@@ -1,5 +1,11 @@
 <?php
 
+	
+
+	if ($_SERVER['DOCUMENT_ROOT'] == ""){
+	   $_SERVER['DOCUMENT_ROOT'] = realpath(__DIR__ . '/../..')."/";
+	}
+
 	include_once $_SERVER['DOCUMENT_ROOT']."connection.php";
 
 	$NeedProcessRunAgain = false;
