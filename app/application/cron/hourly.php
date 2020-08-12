@@ -1,5 +1,5 @@
 <?php
-	include_once $GLOBALS['RootDir']."connection.php";
+	include_once $_SERVER['DOCUMENT_ROOT']."connection.php";
 	
 	$username=$GLOBALS['DB_USER'];
 	$password=$GLOBALS['DB_PASSWORD'];
