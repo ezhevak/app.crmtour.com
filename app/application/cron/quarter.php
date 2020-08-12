@@ -1,5 +1,6 @@
 <?php
-	include_once $GLOBALS['RootDir']."connection.php";
+
+	include_once $_SERVER['DOCUMENT_ROOT']."connection.php";
 	
 	$username=$GLOBALS['DB_USER'];
 	$password=$GLOBALS['DB_PASSWORD'];
@@ -20,14 +21,6 @@
 	echo "Выполнена процедура отправки напоминаний на почту."."</br>";
 	include_once $GLOBALS['RootDir']."application/cron/export_excel.php";
 	
-	function writeLog($text) {
-	    //return false;
-	    $fp = fopen ($GLOBALS['RootDir'].'log/srvtask_scheduler'.date("Ymd").'.txt', "a");
-	    fwrite($fp, print_r(date('Y-m-d H:i:s')." ".$text."\n", true));
-	    fclose($fp);
-	}
-	
-	writeLog("Старт планировщика");
 	
 	$conn = mysqli_connect($dbhost, $username, $password, $dbname);
 	$conn->	set_charset("utf8");
@@ -41,7 +34,7 @@
 			"   and Start > DATE_SUB(NOW(), INTERVAL 15 MINUTE) ".
 			"   and Start < DATE_ADD(NOW(), INTERVAL 10 MINUTE) ";
 	$result = mysqli_query($conn, $sql);
-	writeLog("Планировщик:".mysqli_num_rows($result)." задач в очереди");
+
 	if (mysqli_num_rows($result) > 0) {
 		while($row = mysqli_fetch_assoc($result)) {
 			writeLog("Запуск задачи:".$row["Id"]);
@@ -50,5 +43,5 @@
 		}
 	}
 	mysql_close();
-	writeLog("Финиш планировщика");
+
 ?>
