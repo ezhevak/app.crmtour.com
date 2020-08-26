@@ -80,9 +80,14 @@ class Model_Hotels extends Model
 		$mysqli = database::getInstance();
         $db = $mysqli->getConnection();
         
-		$cols = array ("Id","HotelName","DirectionName","RegionName","HotelStarsName","HotelBeachName","HotelRatingName","ScanExists","HotelWebSite");
-		$db->where('AccId', $_SESSION['AccId']);
-		$json = $db->JsonBuilder()->get("vHotels", null, $cols);
+		$cols = array ("vh.Id","vh.HotelName","vh.DirectionName","vh.RegionName","vh.HotelStarsName","vh.HotelBeachName","vh.HotelRatingName",
+					   "vh.ScanExists","vh.HotelWebSite", "vhd.DealsAmount");
+		$dealsQ = $db->subQuery ("vhd");
+		$dealsQ->get ("vHotelDeals");
+		$db->join($dealsQ, "vh.Id = vhd.HotelId", "LEFT");
+		
+		$db->where('vh.AccId', $_SESSION['AccId']);
+		$json = $db->JsonBuilder()->get("vHotels vh", null, $cols);
 		$db->disconnect();
 		
 		header('Content-Type: application/json; charset=utf-8');

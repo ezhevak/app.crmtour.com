@@ -544,3 +544,9 @@ AS SELECT
    `Users`.`TaskColor` AS `TaskColor`,
    `Users`.`TelegramChatId` AS `TelegramChatId`
 FROM `Users`;
+
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`zhevak_app`@`%` SQL SECURITY DEFINER VIEW `vHotelDeals`
+AS SELECT
+   `d`.`HotelId` AS `HotelId`, count(`d`.`Id`) AS `DealsAmount`
+FROM `Deals` `d` group by `d`.`HotelId`;
