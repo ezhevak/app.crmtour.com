@@ -17,8 +17,8 @@ function writeLog($text, $useLogs) {
 }
 
 $listOfBinotelServers = array(
-	'91.197.217.11' => 'alfabank.ua',
-	'176.36.26.153' => 'Home'
+	'00.00.00.00' => 'alfa',
+	'00.00.00.00' => 'Home'
 );
 
 /**
