@@ -108,6 +108,7 @@ class Model_Address extends Model
 		//Проверяем наличие такой компании в системе
 		$db_check->where('AccId', $_SESSION['AccId']);
 		$db_check->where('ContactId', $data["ContactId"]);
+		$db_check->where('Type', $data["Type"]);	//Исправление ошибки. Один и тот же номер нельзя было перекинуть между типами
 		$db_check->where('Address', $data["Address"]);
 		$dataCheck["AddressId"] = $db_check->getValue("Address", "Id");
 		
