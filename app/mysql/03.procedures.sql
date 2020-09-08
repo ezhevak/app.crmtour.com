@@ -1,5 +1,7 @@
+DROP PROCEDURE prBilling;
+
 DELIMITER ;;
-CREATE DEFINER=`zhevak_tmp`@`%` PROCEDURE `prBilling`()
+CREATE PROCEDURE `prBilling`()
     COMMENT 'Ежедневная процедура расчёта задолжености пользователей системы'
 BEGIN
 
@@ -57,9 +59,9 @@ and acc.ReffererId !=0;
 END;;
 DELIMITER ;
 
-
+DROP PROCEDURE sysSchedulerDaily;
 DELIMITER ;;
-CREATE DEFINER=`zhevak_tmp`@`%` PROCEDURE `sysSchedulerDaily`()
+CREATE PROCEDURE `sysSchedulerDaily`()
 BEGIN
 	
 	delete from DealParticipants
@@ -155,8 +157,10 @@ from (select AccId, count(1) AS `ActiveUsers`
 END;;
 DELIMITER ;
 
+
+DROP PROCEDURE sysSchedulerHourly;
 DELIMITER ;;
-CREATE DEFINER=`zhevak_tmp`@`%` PROCEDURE `sysSchedulerHourly`()
+CREATE PROCEDURE `sysSchedulerHourly`()
 BEGIN
 
 update Contacts as cl
@@ -177,8 +181,9 @@ set cl.Segment = case
 END;;
 DELIMITER ;
 
+DROP PROCEDURE sysSchedulerQuarterHour;
 DELIMITER ;;
-CREATE DEFINER=`zhevak_tmp`@`%` PROCEDURE `sysSchedulerQuarterHour`()
+CREATE PROCEDURE `sysSchedulerQuarterHour`()
 BEGIN
 	
 	

@@ -1,4 +1,6 @@
-CREATE DEFINER=`zhevak_tmp`@`%` FUNCTION `fGetAccAdminId`(
+DROP FUNCTION IF EXISTS fGetAccAdminId;
+DELIMITER $$
+CREATE FUNCTION `fGetAccAdminId`(
 	`inAccId` int
 
 
@@ -10,10 +12,13 @@ BEGIN
  select Id into lvl from vUsers where AccId = inAccId and Role ='admin' limit 1;
  
  RETURN (lvl);
-END;
+END$$
+DELIMITER ;
 
 
-CREATE DEFINER=`zhevak_tmp`@`%` FUNCTION `fGetRegion`(
+DROP FUNCTION IF EXISTS fGetRegion;
+DELIMITER $$
+CREATE FUNCTION `fGetRegion`(
 	`inAccId` int,
 	`inDirectionId` INT,
 	`inRegionName` VARCHAR(50)
@@ -25,10 +30,16 @@ BEGIN
  select Id into lvl from dimRegion where AccId = 1 and DirectionId = inDirectionId and RegionName = inRegionName;
  
  RETURN (lvl);
-END;
+END$$
+DELIMITER ;
 
 
-CREATE DEFINER=`zhevak_tmp`@`%` FUNCTION `fin2str_ukr`( num DECIMAL(20,2) ) RETURNS varchar(1000) CHARSET utf8
+
+
+
+DROP FUNCTION IF EXISTS fin2str_ukr;
+DELIMITER $$
+CREATE FUNCTION `fin2str_ukr`( num DECIMAL(20,2) ) RETURNS varchar(1000) CHARSET utf8
 BEGIN
     DECLARE grn BIGINT; 
     declare kop bigint; 
@@ -97,9 +108,15 @@ BEGIN
     
     SET result = CONCAT(sgrn,' ',namegrn, ' ', skop,' ',namekop);
     RETURN CONCAT(UPPER(LEFT(result, 1)), SUBSTRING(result, 2));
-  END;
+  END$$
+DELIMITER ;
 
-  CREATE DEFINER=`zhevak_tmp`@`%` FUNCTION `num2str_ukr`(Number BIGINT, sex varchar(2) ) RETURNS varchar(1000) CHARSET utf8
+
+
+
+DROP FUNCTION IF EXISTS num2str_ukr;
+DELIMITER $$
+CREATE FUNCTION `num2str_ukr`(Number BIGINT, sex varchar(2) ) RETURNS varchar(1000) CHARSET utf8
 BEGIN
     DECLARE result VARCHAR(1000);
  
@@ -346,4 +363,5 @@ BEGIN
     END LOOP;
  
     RETURN TRIM(result);
-  END;
+  END$$
+DELIMITER ;

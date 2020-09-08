@@ -1,4 +1,114 @@
-CREATE ALGORITHM=UNDEFINED DEFINER=`zhevak_tmp`@`%` SQL SECURITY DEFINER VIEW `printDeals`
+DROP VIEW IF EXISTS `vUsers`;
+CREATE VIEW `vUsers`
+AS SELECT
+   `Users`.`Id` AS `Id`,
+   `Users`.`AccId` AS `AccId`,
+   `Users`.`BranchId` AS `BranchId`,
+   `Users`.`Login` AS `Login`,
+   `Users`.`Pass` AS `Pass`,
+   `Users`.`Role` AS `Role`,
+   `Users`.`FirstName` AS `FirstName`,
+   `Users`.`LastName` AS `LastName`,
+   `Users`.`Phone` AS `Phone`,
+   `Users`.`Email` AS `Email`,
+   `Users`.`Lang` AS `Lang`,
+   `Users`.`Commission` AS `Commission`,concat(ifnull(`Users`.`LastName`,''),' ',ifnull(`Users`.`FirstName`,'')) AS `ManagerName`,
+   `Users`.`Inactive` AS `Inactive`,
+   `Users`.`TaskColor` AS `TaskColor`,
+   `Users`.`TelegramChatId` AS `TelegramChatId`
+FROM `Users`;
+
+
+DROP VIEW IF EXISTS `vDocuments`;
+CREATE VIEW `vDocuments`
+AS SELECT
+   `d`.`Id` AS `Id`,
+   `d`.`AccId` AS `AccId`,
+   `d`.`ContactId` AS `ContactId`,
+   `d`.`DocType` AS `DocType`,
+   `ds`.`Name` AS `DocTypeName`,
+   `d`.`FirstName` AS `FirstName`,
+   `d`.`LastName` AS `LastName`,
+   `d`.`RecordNo` AS `RecordNo`,
+   `d`.`SeriaNum` AS `SeriaNum`,date_format(`d`.`Valid`,'%d.%m.%Y') AS `Valid`,
+   `d`.`IssuedBy` AS `IssuedBy`,date_format(`d`.`IssuedDate`,'%d.%m.%Y') AS `IssuedDate`,
+   `d`.`Created` AS `Created`,
+   `d`.`Comments` AS `Comments`,
+   `d`.`Biometric` AS `Biometric`,
+   `d`.`LastAdd` AS `LastAdd`,(case when (`up`.`Id` is not null) then 1 else 0 end) AS `ScanExists`
+FROM ((`Documents` `d` join `Dictionaries` `ds` on(((`d`.`DocType` = `ds`.`LIC`) and (`d`.`AccId` = `ds`.`AccId`) and (`ds`.`Lang` = 'ru_RU')))) left join `Uploads` `up` on(((`d`.`AccId` = `up`.`AccId`) and (`d`.`Id` = `up`.`ModelId`) and (`up`.`ModelType` = 'documents'))));
+
+
+DROP VIEW IF EXISTS `vAddress`;
+CREATE VIEW `vAddress`
+AS SELECT
+   `ad`.`Id` AS `Id`,
+   `ad`.`AccId` AS `AccId`,
+   `ad`.`ContactId` AS `ContactId`,
+   `ad`.`LegalId` AS `LegalId`,
+   `ad`.`Type` AS `Type`,
+   `dic`.`Name` AS `TypeName`,
+   `dic`.`SubType` AS `SubType`,
+   `ad`.`Address` AS `Address`,
+   `ad`.`Comments` AS `Comments`,
+   `ad`.`Active` AS `Active`,
+   `ad`.`Send` AS `Send`,
+   `ad`.`UserId` AS `UserId`,
+   `ad`.`UpdateUserId` AS `UpdateUserId`,
+   `ad`.`LastAdd` AS `LastAdd`
+FROM (`Address` `ad` join `Dictionaries` `dic` on(((`ad`.`AccId` = `dic`.`AccId`) and (`ad`.`Type` = `dic`.`LIC`) and (`dic`.`Type` = 'AddressType') and (`dic`.`Lang` = 'ru_RU'))));
+
+DROP VIEW IF EXISTS `vContacts`;
+CREATE VIEW `vContacts`
+AS SELECT
+   `c`.`Id` AS `Id`,
+   `c`.`AccId` AS `AccId`,
+   `c`.`LastName` AS `LastName`,
+   `c`.`FirstName` AS `FirstName`,
+   `c`.`MiddleName` AS `MiddleName`,
+   `c`.`UserId` AS `UserId`,
+   `u`.`ManagerName` AS `ManagerName`,
+   `c`.`DateBirth` AS `DateBirthOriginal`,date_format(`c`.`DateBirth`,'%d.%m.%Y') AS `DateBirth`,concat(convert(date_format(`c`.`DateBirth`,'%d.%m.%Y') using utf8mb4),' (',timestampdiff(YEAR,`c`.`DateBirth`,curdate()),')') AS `DateBirthAge`,
+   `c`.`Comments` AS `Comments`,
+   `c`.`Sex` AS `Sex`,
+   `sex`.`Name` AS `SexName`,
+   `c`.`Segment` AS `Segment`,
+   `ds`.`Name` AS `SegmentName`,
+   `c`.`TaxCode` AS `TaxCode`,
+   `c`.`Address` AS `Address`,
+   `c`.`BlackList` AS `BlackList`,
+   `c`.`Created` AS `Created`,
+   `c`.`LastUpdate` AS `LastUpdate`,
+   `doc`.`FirstName` AS `docFirstName`,
+   `doc`.`LastName` AS `docLastName`,
+   `doc`.`SeriaNum` AS `docSeriaNum`,
+   `doc`.`IssuedBy` AS `docIssuedBy`,
+   `doc`.`IssuedDate` AS `docIssuedDate`,
+   `doc`.`Valid` AS `docValid`,
+   `doc`.`Biometric` AS `docBiometric`,
+   `p`.`Address` AS `PhoneMob`,
+   `e`.`Address` AS `EmailHome`,
+   `c`.`Source` AS `Source`,
+   `dso`.`Name` AS `SourceName`
+FROM (((((((`Contacts` `c` left join `vUsers` `u` on((`c`.`UserId` = `u`.`Id`))) left join `Dictionaries` `dso` on(((`c`.`Source` = `dso`.`LIC`) and (`c`.`AccId` = `dso`.`AccId`) and (`dso`.`Lang` = `u`.`Lang`)))) left join `Dictionaries` `ds` on(((`c`.`Segment` = `ds`.`LIC`) and (`c`.`AccId` = `ds`.`AccId`) and (`ds`.`Lang` = `u`.`Lang`)))) left join `Dictionaries` `sex` on(((`c`.`Sex` = `sex`.`LIC`) and (`c`.`AccId` = `sex`.`AccId`) and (`sex`.`Lang` = `u`.`Lang`)))) left join `vDocuments` `doc` on(((`c`.`AccId` = `doc`.`AccId`) and (`c`.`Id` = `doc`.`ContactId`) and (`doc`.`DocType` = 'intPass') and (`doc`.`LastAdd` = 1)))) left join `vAddress` `p` on(((`c`.`AccId` = `p`.`AccId`) and (`c`.`Id` = `p`.`ContactId`) and (`p`.`Type` = 'PhoneMob') and (`p`.`LastAdd` = 1)))) left join `vAddress` `e` on(((`c`.`AccId` = `e`.`AccId`) and (`c`.`Id` = `e`.`ContactId`) and (`e`.`Type` = 'EmailHome') and (`e`.`LastAdd` = 1))));
+
+DROP VIEW IF EXISTS `vAirport`;
+CREATE VIEW `vAirport`
+AS SELECT
+   `ap`.`Id` AS `Id`,
+   `ap`.`DirectionId` AS `DirectionId`,
+   `dd`.`DirectionName` AS `AirportCountry`,
+   `ap`.`AirportCode` AS `AirportCode`,
+   `ap`.`AirportName` AS `AirportName`,
+   `ap`.`AirportCity` AS `AirportCity`,
+   `ap`.`AirportPhone` AS `AirportPhone`,
+   `ap`.`AirportFax` AS `AirportFax`,
+   `ap`.`AirportEmail` AS `AirportEmail`,
+   `ap`.`AirportSite` AS `AirportSite`,(case when (`ap`.`Id` = 1) then '' else concat(`dd`.`DirectionName`,', ',`ap`.`AirportCity`,', ',`ap`.`AirportName`,', (',`ap`.`AirportCode`,')') end) AS `AirportConcat`
+FROM (`Airport` `ap` left join `dimDirection` `dd` on((`ap`.`DirectionId` = `dd`.`Id`)));
+
+DROP VIEW IF EXISTS `printDeals`;
+CREATE VIEW `printDeals`
 AS SELECT
    `d`.`Id` AS `Id`,
    `d`.`AccId` AS `AccId`,
@@ -78,7 +188,7 @@ AS SELECT
    `d`.`AdditionalServices` AS `AdditionalServices`
 FROM ((((((((((((((((((((`Deals` `d` join `vContacts` `c` on(((`d`.`AccId` = `c`.`AccId`) and (`d`.`ContactId` = `c`.`Id`)))) join `vUsers` `u` on(((`d`.`UserId` = `u`.`Id`) and (`d`.`AccId` = `u`.`AccId`)))) left join `vDocuments` `doc` on(((`c`.`Id` = `doc`.`ContactId`) and (`c`.`AccId` = `doc`.`AccId`) and (`doc`.`DocType` = 'ukrPass') and (`doc`.`LastAdd` = 1)))) join `Dictionaries` `dt` on(((`d`.`DealType` = `dt`.`LIC`) and (`d`.`AccId` = `dt`.`AccId`) and (`dt`.`Lang` = `u`.`Lang`)))) join `Dictionaries` `dcc` on(((`d`.`DealCurrency` = `dcc`.`LIC`) and (`d`.`AccId` = `dcc`.`AccId`) and (`dcc`.`Lang` = `u`.`Lang`)))) join `Dictionaries` `df` on(((`d`.`FeedId` = `df`.`LIC`) and (`d`.`AccId` = `df`.`AccId`) and (`df`.`Lang` = `u`.`Lang`)))) join `Dictionaries` `dft` on(((`d`.`FlatTypeId` = `dft`.`LIC`) and (`d`.`AccId` = `dft`.`AccId`) and (`dft`.`Lang` = `u`.`Lang`)))) join `Dictionaries` `tr` on(((`d`.`TransferId` = `tr`.`LIC`) and (`d`.`AccId` = `tr`.`AccId`) and (`tr`.`Lang` = `u`.`Lang`)))) join `Dictionaries` `rw` on(((`d`.`RoomViewId` = `rw`.`LIC`) and (`d`.`AccId` = `rw`.`AccId`) and (`rw`.`Lang` = `u`.`Lang`)))) join `Dictionaries` `ac` on(((`d`.`AgentClient` = `ac`.`LIC`) and (`d`.`AccId` = `ac`.`AccId`) and (`ac`.`Lang` = `u`.`Lang`)))) join `Dictionaries` `pt` on(((`d`.`PlacingId` = `pt`.`LIC`) and (`d`.`AccId` = `pt`.`AccId`) and (`pt`.`Lang` = `u`.`Lang`)))) left join `dimDirection` `dir` on((`d`.`DirectionId` = `dir`.`Id`))) left join `dimRegion` `reg` on(((`d`.`AccId` = `reg`.`AccId`) and (`d`.`RegionId` = `reg`.`Id`)))) left join `dimHotels` `hot` on(((`d`.`AccId` = `hot`.`AccId`) and (`d`.`HotelId` = `hot`.`Id`)))) left join `Dictionaries` `st` on(((`hot`.`HotelStars` = `st`.`LIC`) and (`d`.`AccId` = `st`.`AccId`) and (`st`.`Lang` = `u`.`Lang`)))) left join `dimOperators` `op` on(((`d`.`AccId` = `op`.`AccId`) and (`d`.`OperatorId` = `op`.`Id`)))) left join `vAirport` `aa` on((`d`.`FlightACityArrivalId` = `aa`.`Id`))) left join `vAirport` `ad` on((`d`.`FlightACityDepartureId` = `ad`.`Id`))) left join `vAirport` `ba` on((`d`.`FlightBCityArrivalId` = `ba`.`Id`))) left join `vAirport` `bd` on((`d`.`FlightBCityDepartureId` = `bd`.`Id`)));
 
-
+DROP VIEW IF EXISTS `rDeals`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`zhevak_tmp`@`%` SQL SECURITY DEFINER VIEW `rDeals`
 AS SELECT
    `d`.`Id` AS `Id`,
@@ -101,79 +211,17 @@ FROM (((`Deals` `d` join `vUsers` `u` on(((`d`.`UserId` = `u`.`Id`) and (`d`.`Ac
 
 
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`zhevak_tmp`@`%` SQL SECURITY DEFINER VIEW `vAddress`
-AS SELECT
-   `ad`.`Id` AS `Id`,
-   `ad`.`AccId` AS `AccId`,
-   `ad`.`ContactId` AS `ContactId`,
-   `ad`.`LegalId` AS `LegalId`,
-   `ad`.`Type` AS `Type`,
-   `dic`.`Name` AS `TypeName`,
-   `dic`.`SubType` AS `SubType`,
-   `ad`.`Address` AS `Address`,
-   `ad`.`Comments` AS `Comments`,
-   `ad`.`Active` AS `Active`,
-   `ad`.`Send` AS `Send`,
-   `ad`.`UserId` AS `UserId`,
-   `ad`.`UpdateUserId` AS `UpdateUserId`,
-   `ad`.`LastAdd` AS `LastAdd`
-FROM (`Address` `ad` join `Dictionaries` `dic` on(((`ad`.`AccId` = `dic`.`AccId`) and (`ad`.`Type` = `dic`.`LIC`) and (`dic`.`Type` = 'AddressType') and (`dic`.`Lang` = 'ru_RU'))));
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`zhevak_tmp`@`%` SQL SECURITY DEFINER VIEW `vAddressMaxDate`
+DROP VIEW IF EXISTS `vAddressMaxDate`;
+CREATE VIEW `vAddressMaxDate`
 AS SELECT
    `Address`.`AccId` AS `AccId`,
    `Address`.`ContactId` AS `ContactId`,
    `Address`.`Type` AS `Type`,max(`Address`.`Created`) AS `maxDateAdd`
 FROM `Address` group by `Address`.`AccId`,`Address`.`ContactId`,`Address`.`Type`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`zhevak_tmp`@`%` SQL SECURITY DEFINER VIEW `vAirport`
-AS SELECT
-   `ap`.`Id` AS `Id`,
-   `ap`.`DirectionId` AS `DirectionId`,
-   `dd`.`DirectionName` AS `AirportCountry`,
-   `ap`.`AirportCode` AS `AirportCode`,
-   `ap`.`AirportName` AS `AirportName`,
-   `ap`.`AirportCity` AS `AirportCity`,
-   `ap`.`AirportPhone` AS `AirportPhone`,
-   `ap`.`AirportFax` AS `AirportFax`,
-   `ap`.`AirportEmail` AS `AirportEmail`,
-   `ap`.`AirportSite` AS `AirportSite`,(case when (`ap`.`Id` = 1) then '' else concat(`dd`.`DirectionName`,', ',`ap`.`AirportCity`,', ',`ap`.`AirportName`,', (',`ap`.`AirportCode`,')') end) AS `AirportConcat`
-FROM (`Airport` `ap` left join `dimDirection` `dd` on((`ap`.`DirectionId` = `dd`.`Id`)));
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`zhevak_tmp`@`%` SQL SECURITY DEFINER VIEW `vContacts`
-AS SELECT
-   `c`.`Id` AS `Id`,
-   `c`.`AccId` AS `AccId`,
-   `c`.`LastName` AS `LastName`,
-   `c`.`FirstName` AS `FirstName`,
-   `c`.`MiddleName` AS `MiddleName`,
-   `c`.`UserId` AS `UserId`,
-   `u`.`ManagerName` AS `ManagerName`,
-   `c`.`DateBirth` AS `DateBirthOriginal`,date_format(`c`.`DateBirth`,'%d.%m.%Y') AS `DateBirth`,concat(convert(date_format(`c`.`DateBirth`,'%d.%m.%Y') using utf8mb4),' (',timestampdiff(YEAR,`c`.`DateBirth`,curdate()),')') AS `DateBirthAge`,
-   `c`.`Comments` AS `Comments`,
-   `c`.`Sex` AS `Sex`,
-   `sex`.`Name` AS `SexName`,
-   `c`.`Segment` AS `Segment`,
-   `ds`.`Name` AS `SegmentName`,
-   `c`.`TaxCode` AS `TaxCode`,
-   `c`.`Address` AS `Address`,
-   `c`.`BlackList` AS `BlackList`,
-   `c`.`Created` AS `Created`,
-   `c`.`LastUpdate` AS `LastUpdate`,
-   `doc`.`FirstName` AS `docFirstName`,
-   `doc`.`LastName` AS `docLastName`,
-   `doc`.`SeriaNum` AS `docSeriaNum`,
-   `doc`.`IssuedBy` AS `docIssuedBy`,
-   `doc`.`IssuedDate` AS `docIssuedDate`,
-   `doc`.`Valid` AS `docValid`,
-   `doc`.`Biometric` AS `docBiometric`,
-   `p`.`Address` AS `PhoneMob`,
-   `e`.`Address` AS `EmailHome`,
-   `c`.`Source` AS `Source`,
-   `dso`.`Name` AS `SourceName`
-FROM (((((((`Contacts` `c` left join `vUsers` `u` on((`c`.`UserId` = `u`.`Id`))) left join `Dictionaries` `dso` on(((`c`.`Source` = `dso`.`LIC`) and (`c`.`AccId` = `dso`.`AccId`) and (`dso`.`Lang` = `u`.`Lang`)))) left join `Dictionaries` `ds` on(((`c`.`Segment` = `ds`.`LIC`) and (`c`.`AccId` = `ds`.`AccId`) and (`ds`.`Lang` = `u`.`Lang`)))) left join `Dictionaries` `sex` on(((`c`.`Sex` = `sex`.`LIC`) and (`c`.`AccId` = `sex`.`AccId`) and (`sex`.`Lang` = `u`.`Lang`)))) left join `vDocuments` `doc` on(((`c`.`AccId` = `doc`.`AccId`) and (`c`.`Id` = `doc`.`ContactId`) and (`doc`.`DocType` = 'intPass') and (`doc`.`LastAdd` = 1)))) left join `vAddress` `p` on(((`c`.`AccId` = `p`.`AccId`) and (`c`.`Id` = `p`.`ContactId`) and (`p`.`Type` = 'PhoneMob') and (`p`.`LastAdd` = 1)))) left join `vAddress` `e` on(((`c`.`AccId` = `e`.`AccId`) and (`c`.`Id` = `e`.`ContactId`) and (`e`.`Type` = 'EmailHome') and (`e`.`LastAdd` = 1))));
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`zhevak_tmp`@`%` SQL SECURITY DEFINER VIEW `vContactToContact`
+DROP VIEW IF EXISTS `vContactToContact`;
+CREATE VIEW `vContactToContact`
 AS SELECT
    `cc`.`Id` AS `Id`,
    `cc`.`AccId` AS `AccId`,
@@ -187,7 +235,8 @@ AS SELECT
    `cc`.`LinkType` AS `LinkType`
 FROM (`ContactToContact` `cc` join `vContacts` `cl` on(((`cc`.`ParrContactId` = `cl`.`Id`) and (`cc`.`AccId` = `cl`.`AccId`))));
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`zhevak_tmp`@`%` SQL SECURITY DEFINER VIEW `vDealParticipants`
+DROP VIEW IF EXISTS `vDealParticipants`;
+CREATE VIEW `vDealParticipants`
 AS SELECT
    `dp`.`Id` AS `Id`,
    `dp`.`AccId` AS `AccId`,
@@ -208,7 +257,8 @@ AS SELECT
    `dp`.`LastUpdate` AS `PartLastUpdate`
 FROM (`DealParticipants` `dp` join `vContacts` `cl` on(((`dp`.`ContactId` = `cl`.`Id`) and (`dp`.`AccId` = `cl`.`AccId`))));
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`zhevak_tmp`@`%` SQL SECURITY DEFINER VIEW `vDeals`
+DROP VIEW IF EXISTS `vDeals`;
+CREATE VIEW `vDeals`
 AS SELECT
    `d`.`Id` AS `Id`,
    `d`.`AccId` AS `AccId`,
@@ -280,8 +330,16 @@ AS SELECT
    `bd`.`AirportConcat` AS `FlightBCityDepartureName`
 FROM (((((((((((((((((((`Deals` `d` left join `vContacts` `c` on(((`d`.`AccId` = `c`.`AccId`) and (`d`.`ContactId` = `c`.`Id`)))) left join `Legals` `l` on(((`d`.`AccId` = `l`.`AccId`) and (`d`.`LegalId` = `l`.`Id`)))) left join `vUsers` `u` on(((`d`.`UserId` = `u`.`Id`) and (`d`.`AccId` = `u`.`AccId`)))) left join `Dictionaries` `dt` on(((`d`.`DealType` = `dt`.`LIC`) and (`d`.`AccId` = `dt`.`AccId`) and (`dt`.`Lang` = `u`.`Lang`)))) left join `Dictionaries` `dcc` on(((`d`.`DealCurrency` = `dcc`.`LIC`) and (`d`.`AccId` = `dcc`.`AccId`) and (`dcc`.`Lang` = `u`.`Lang`)))) left join `Dictionaries` `df` on(((`d`.`FeedId` = `df`.`LIC`) and (`d`.`AccId` = `df`.`AccId`) and (`df`.`Lang` = `u`.`Lang`)))) left join `Dictionaries` `dft` on(((`d`.`FlatTypeId` = `dft`.`LIC`) and (`d`.`AccId` = `dft`.`AccId`) and (`dft`.`Lang` = `u`.`Lang`)))) left join `Dictionaries` `tr` on(((`d`.`TransferId` = `tr`.`LIC`) and (`d`.`AccId` = `tr`.`AccId`) and (`tr`.`Lang` = `u`.`Lang`)))) left join `Dictionaries` `rw` on(((`d`.`RoomViewId` = `rw`.`LIC`) and (`d`.`AccId` = `rw`.`AccId`) and (`rw`.`Lang` = `u`.`Lang`)))) left join `Dictionaries` `ac` on(((`d`.`AgentClient` = `ac`.`LIC`) and (`d`.`AccId` = `ac`.`AccId`) and (`ac`.`Lang` = `u`.`Lang`)))) left join `Dictionaries` `pt` on(((`d`.`PlacingId` = `pt`.`LIC`) and (`d`.`AccId` = `pt`.`AccId`) and (`pt`.`Lang` = `u`.`Lang`)))) left join `dimDirection` `dir` on((`d`.`DirectionId` = `dir`.`Id`))) left join `dimRegion` `reg` on(((`d`.`AccId` = `reg`.`AccId`) and (`d`.`RegionId` = `reg`.`Id`)))) left join `dimHotels` `hot` on(((`d`.`AccId` = `hot`.`AccId`) and (`d`.`HotelId` = `hot`.`Id`)))) left join `dimOperators` `op` on(((`d`.`AccId` = `op`.`AccId`) and (`d`.`OperatorId` = `op`.`Id`)))) left join `vAirport` `aa` on((`d`.`FlightACityArrivalId` = `aa`.`Id`))) left join `vAirport` `ad` on((`d`.`FlightACityDepartureId` = `ad`.`Id`))) left join `vAirport` `ba` on((`d`.`FlightBCityArrivalId` = `ba`.`Id`))) left join `vAirport` `bd` on((`d`.`FlightBCityDepartureId` = `bd`.`Id`)));
 
+DROP VIEW IF EXISTS `vPaymentsGroup`;
+CREATE VIEW `vPaymentsGroup`
+AS SELECT
+   `Payments`.`AccId` AS `AccId`,
+   `Payments`.`DealId` AS `DealId`,
+   `Payments`.`PayType` AS `PayType`,count(`Payments`.`Id`) AS `PayCount`,sum(`Payments`.`PaySum`) AS `PaySum`
+FROM `Payments` group by `Payments`.`AccId`,`Payments`.`DealId`,`Payments`.`PayType`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`zhevak_tmp`@`%` SQL SECURITY DEFINER VIEW `vDealsList`
+DROP VIEW IF EXISTS `vDealsList`;
+CREATE VIEW `vDealsList`
 AS SELECT
    `d`.`Id` AS `Id`,
    `d`.`AccId` AS `AccId`,
@@ -303,33 +361,17 @@ AS SELECT
    `vpg`.`PaySum` AS `PaySum`,(case when (`d`.`DealSum` <= `vpg`.`PaySum`) then 1 else 0 end) AS `NotPaidDeal`
 FROM ((((((`Deals` `d` join `vUsers` `u` on(((`d`.`UserId` = `u`.`Id`) and (`d`.`AccId` = `u`.`AccId`)))) left join `dimDirection` `dir` on((`d`.`DirectionId` = `dir`.`Id`))) left join `dimRegion` `reg` on(((`d`.`AccId` = `reg`.`AccId`) and (`d`.`RegionId` = `reg`.`Id`)))) left join `Dictionaries` `dt` on(((`d`.`DealType` = `dt`.`LIC`) and (`d`.`AccId` = `dt`.`AccId`) and (`dt`.`Lang` = `u`.`Lang`)))) left join `dimOperators` `op` on(((`d`.`AccId` = `op`.`AccId`) and (`d`.`OperatorId` = `op`.`Id`)))) left join `vPaymentsGroup` `vpg` on(((`d`.`AccId` = `vpg`.`AccId`) and (`d`.`Id` = `vpg`.`DealId`)))) union all select `dp`.`DealId` AS `Id`,`dp`.`AccId` AS `AccId`,`dp`.`ContactId` AS `ContactId`,`d`.`DealNo` AS `DealNo`,`d`.`DealDate` AS `DealDateOriginal`,date_format(`d`.`DealDate`,'%d.%m.%Y') AS `DealDate`,`d`.`DealSum` AS `DealSum`,`d`.`UserId` AS `UserId`,`u`.`ManagerName` AS `ManagerName`,`d`.`DirectionId` AS `DirectionId`,`dir`.`DirectionName` AS `DirectionName`,`d`.`RegionId` AS `RegionId`,`reg`.`RegionName` AS `RegionName`,'Участник' AS `ParticipantType`,`d`.`DealType` AS `DealType`,`dt`.`Name` AS `DealTypeName`,`d`.`OperatorId` AS `OperatorId`,`op`.`Name` AS `OperatorName`,`vpg`.`PayCount` AS `PayCount`,`vpg`.`PaySum` AS `PaySum`,(case when (`d`.`DealSum` <= `vpg`.`PaySum`) then 1 else 0 end) AS `NotPaidDeal` from ((((((((`vDealParticipants` `dp` join `Deals` `d` on(((`dp`.`AccId` = `d`.`AccId`) and (`dp`.`DealId` = `d`.`Id`)))) join `vUsers` `u` on(((`d`.`AccId` = `u`.`AccId`) and (`d`.`UserId` = `u`.`Id`)))) left join `dimDirection` `dir` on((`d`.`DirectionId` = `dir`.`Id`))) left join `dimRegion` `reg` on(((`d`.`AccId` = `reg`.`AccId`) and (`d`.`RegionId` = `reg`.`Id`)))) left join `Deals` `dd` on(((`dp`.`DealId` = `dd`.`Id`) and (`dp`.`ContactId` = `dd`.`ContactId`) and (`dp`.`AccId` = `dd`.`AccId`)))) left join `Dictionaries` `dt` on(((`d`.`DealType` = `dt`.`LIC`) and (`d`.`AccId` = `dt`.`AccId`) and (`dt`.`Lang` = `u`.`Lang`)))) left join `dimOperators` `op` on(((`d`.`AccId` = `op`.`AccId`) and (`d`.`OperatorId` = `op`.`Id`)))) left join `vPaymentsGroup` `vpg` on(((`d`.`AccId` = `vpg`.`AccId`) and (`d`.`Id` = `vpg`.`DealId`)))) where isnull(`dd`.`Id`);
 
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`zhevak_tmp`@`%` SQL SECURITY DEFINER VIEW `vDocuments`
-AS SELECT
-   `d`.`Id` AS `Id`,
-   `d`.`AccId` AS `AccId`,
-   `d`.`ContactId` AS `ContactId`,
-   `d`.`DocType` AS `DocType`,
-   `ds`.`Name` AS `DocTypeName`,
-   `d`.`FirstName` AS `FirstName`,
-   `d`.`LastName` AS `LastName`,
-   `d`.`RecordNo` AS `RecordNo`,
-   `d`.`SeriaNum` AS `SeriaNum`,date_format(`d`.`Valid`,'%d.%m.%Y') AS `Valid`,
-   `d`.`IssuedBy` AS `IssuedBy`,date_format(`d`.`IssuedDate`,'%d.%m.%Y') AS `IssuedDate`,
-   `d`.`Created` AS `Created`,
-   `d`.`Comments` AS `Comments`,
-   `d`.`Biometric` AS `Biometric`,
-   `d`.`LastAdd` AS `LastAdd`,(case when (`up`.`Id` is not null) then 1 else 0 end) AS `ScanExists`
-FROM ((`Documents` `d` join `Dictionaries` `ds` on(((`d`.`DocType` = `ds`.`LIC`) and (`d`.`AccId` = `ds`.`AccId`) and (`ds`.`Lang` = 'ru_RU')))) left join `Uploads` `up` on(((`d`.`AccId` = `up`.`AccId`) and (`d`.`Id` = `up`.`ModelId`) and (`up`.`ModelType` = 'documents'))));
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`zhevak_tmp`@`%` SQL SECURITY DEFINER VIEW `vDocumentsMaxDate`
+DROP VIEW IF EXISTS `vDocumentsMaxDate`;
+CREATE VIEW `vDocumentsMaxDate`
 AS SELECT
    `Documents`.`AccId` AS `AccId`,
    `Documents`.`ContactId` AS `ContactId`,
    `Documents`.`DocType` AS `DocType`,max(`Documents`.`Created`) AS `maxDateAdd`
 FROM `Documents` group by `Documents`.`AccId`,`Documents`.`ContactId`,`Documents`.`DocType`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`zhevak_tmp`@`%` SQL SECURITY DEFINER VIEW `vEmbassy`
+
+DROP VIEW IF EXISTS `vEmbassy`;
+CREATE VIEW `vEmbassy`
 AS SELECT
    `e`.`Id` AS `Id`,
    `e`.`AccId` AS `AccId`,
@@ -342,7 +384,8 @@ AS SELECT
    `e`.`Comments` AS `Comments`
 FROM (`Embassy` `e` join `dimDirection` `dir` on((`e`.`DirectionId` = `dir`.`Id`)));
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`zhevak_tmp`@`%` SQL SECURITY DEFINER VIEW `vHotels`
+DROP VIEW IF EXISTS `vHotels`;
+CREATE VIEW `vHotels`
 AS SELECT
    `h`.`Id` AS `Id`,
    `h`.`AccId` AS `AccId`,
@@ -373,7 +416,8 @@ AS SELECT
    `h`.`HotelJurName` AS `HotelJurName`,(case when (`up`.`Id` is not null) then 1 else 0 end) AS `ScanExists`
 FROM (((((((((`dimHotels` `h` join `dimDirection` `d` on((`h`.`DirectionId` = `d`.`Id`))) left join `dimRegion` `r` on((`h`.`RegionId` = `r`.`Id`))) left join `Uploads` `up` on(((`h`.`AccId` = `up`.`AccId`) and (`h`.`Id` = `up`.`ModelId`) and (`up`.`ModelType` = 'hotels')))) left join `Dictionaries` `st` on(((`h`.`AccId` = `st`.`AccId`) and (`h`.`HotelStars` = `st`.`LIC`) and (`st`.`Type` = 'HotelStars') and (`st`.`Lang` = 'ru_RU')))) left join `Dictionaries` `dic` on(((`h`.`AccId` = `dic`.`AccId`) and (`h`.`HotelRating` = `dic`.`LIC`) and (`dic`.`Type` = 'Rating') and (`dic`.`Lang` = 'ru_RU')))) left join `Dictionaries` `dh` on(((`h`.`AccId` = `dh`.`AccId`) and (`h`.`HotelBeach` = `dh`.`LIC`) and (`dh`.`Type` = 'HotelBeach') and (`dh`.`Lang` = 'ru_RU')))) left join `Dictionaries` `dht` on(((`h`.`AccId` = `dht`.`AccId`) and (`h`.`HotelType` = `dht`.`LIC`) and (`dht`.`Type` = 'HotelType') and (`dht`.`Lang` = 'ru_RU')))) left join `Dictionaries` `dhbl` on(((`h`.`AccId` = `dhbl`.`AccId`) and (`h`.`HotelBeachLine` = `dhbl`.`LIC`) and (`dhbl`.`Type` = 'HotelBeachLine') and (`dhbl`.`Lang` = 'ru_RU')))) left join `Dictionaries` `dhta` on(((`h`.`AccId` = `dhta`.`AccId`) and (`h`.`HotelTripAdvisor` = `dhta`.`LIC`) and (`dhta`.`Type` = 'HotelTripAdvisor') and (`dhta`.`Lang` = 'ru_RU'))));
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`zhevak_tmp`@`%` SQL SECURITY DEFINER VIEW `vLeads`
+DROP VIEW IF EXISTS `vLeads`;
+CREATE VIEW `vLeads`
 AS SELECT
    `l`.`Id` AS `Id`,
    `l`.`AccId` AS `AccId`,
@@ -408,7 +452,8 @@ AS SELECT
    `vp`.`FirstName` AS `partnerFirstName`
 FROM ((((((((`Leads` `l` left join `vUsers` `u` on(((`l`.`UserId` = `u`.`Id`) and (`l`.`AccId` = `u`.`AccId`)))) left join `Dictionaries` `ds` on(((`l`.`LeadStatus` = `ds`.`LIC`) and (`l`.`AccId` = `ds`.`AccId`) and (`ds`.`Lang` = `u`.`Lang`)))) left join `Dictionaries` `dt` on(((`l`.`LeadType` = `dt`.`LIC`) and (`l`.`AccId` = `dt`.`AccId`) and (`dt`.`Lang` = `u`.`Lang`)))) left join `Dictionaries` `dso` on(((`l`.`LeadSource` = `dso`.`LIC`) and (`l`.`AccId` = `dso`.`AccId`) and (`dso`.`Lang` = `u`.`Lang`)))) left join `Dictionaries` `dp` on(((`l`.`LeadPriority` = `dp`.`LIC`) and (`l`.`AccId` = `dp`.`AccId`) and (`dp`.`Lang` = `u`.`Lang`)))) left join `Dictionaries` `dg` on(((`l`.`Sex` = `dg`.`LIC`) and (`l`.`AccId` = `dg`.`AccId`) and (`dg`.`Lang` = `u`.`Lang`)))) left join `vContacts` `vc` on(((`l`.`ContactId` = `vc`.`Id`) and (`l`.`AccId` = `vc`.`AccId`)))) left join `vContacts` `vp` on(((`l`.`PartnerId` = `vp`.`Id`) and (`l`.`AccId` = `vp`.`AccId`))));
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`zhevak_tmp`@`%` SQL SECURITY DEFINER VIEW `vLegalToContact`
+DROP VIEW IF EXISTS `vLegalToContact`;
+CREATE VIEW `vLegalToContact`
 AS SELECT
    `lc`.`Id` AS `Id`,
    `lc`.`AccId` AS `AccId`,
@@ -424,7 +469,8 @@ AS SELECT
    `lc`.`LinkType` AS `LinkType`
 FROM ((`LegalToContact` `lc` join `vContacts` `cl` on(((`lc`.`ContactId` = `cl`.`Id`) and (`lc`.`AccId` = `cl`.`AccId`)))) join `Legals` `leg` on(((`lc`.`LegalId` = `leg`.`Id`) and (`lc`.`AccId` = `leg`.`AccId`))));
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`zhevak_tmp`@`%` SQL SECURITY DEFINER VIEW `vOperators`
+DROP VIEW IF EXISTS `vOperators`;
+CREATE VIEW `vOperators`
 AS SELECT
    `dimOperators`.`Id` AS `Id`,
    `dimOperators`.`AccId` AS `AccId`,
@@ -442,7 +488,8 @@ AS SELECT
    `dimOperators`.`DirectPartners` AS `DirectPartners`
 FROM `dimOperators`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`zhevak_tmp`@`%` SQL SECURITY DEFINER VIEW `vPayments`
+DROP VIEW IF EXISTS `vPayments`;
+CREATE VIEW `vPayments`
 AS SELECT
    `p`.`Id` AS `Id`,
    `p`.`AccId` AS `AccId`,
@@ -459,14 +506,8 @@ AS SELECT
    `p`.`Comments` AS `Comments`
 FROM (`Payments` `p` left join `Dictionaries` `ptype` on(((`p`.`AccId` = `ptype`.`AccId`) and (`p`.`PayType` = `ptype`.`LIC`) and (`ptype`.`Type` = 'DealPayType'))));
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`zhevak_tmp`@`%` SQL SECURITY DEFINER VIEW `vPaymentsGroup`
-AS SELECT
-   `Payments`.`AccId` AS `AccId`,
-   `Payments`.`DealId` AS `DealId`,
-   `Payments`.`PayType` AS `PayType`,count(`Payments`.`Id`) AS `PayCount`,sum(`Payments`.`PaySum`) AS `PaySum`
-FROM `Payments` group by `Payments`.`AccId`,`Payments`.`DealId`,`Payments`.`PayType`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`zhevak_tmp`@`%` SQL SECURITY DEFINER VIEW `vRegions`
+DROP VIEW IF EXISTS `vRegions`;
+CREATE VIEW `vRegions`
 AS SELECT
    `r`.`Id` AS `Id`,
    `r`.`AccId` AS `AccId`,
@@ -478,7 +519,8 @@ AS SELECT
    `r`.`Comments` AS `Comments`
 FROM ((`dimRegion` `r` join `dimDirection` `d` on((`r`.`DirectionId` = `d`.`Id`))) left join `Dictionaries` `dic` on(((`r`.`AccId` = `dic`.`AccId`) and (`r`.`RegionRating` = `dic`.`LIC`) and (`dic`.`Type` = 'Rating') and (`dic`.`Lang` = 'ru_RU'))));
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`zhevak_tmp`@`%` SQL SECURITY DEFINER VIEW `vSessionLog`
+DROP VIEW IF EXISTS `vSessionLog`;
+CREATE VIEW `vSessionLog`
 AS SELECT
    `sl`.`Id` AS `Id`,
    `sl`.`SessionId` AS `SessionId`,
@@ -526,24 +568,6 @@ AS SELECT
    `t`.`Active` AS `Active`
 FROM (`Templates` `t` join `Dictionaries` `dt` on(((`t`.`Module` = `dt`.`LIC`) and (`t`.`AccId` = `dt`.`AccId`) and (`dt`.`Lang` = 'ru_RU'))));
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`zhevak_tmp`@`%` SQL SECURITY DEFINER VIEW `vUsers`
-AS SELECT
-   `Users`.`Id` AS `Id`,
-   `Users`.`AccId` AS `AccId`,
-   `Users`.`BranchId` AS `BranchId`,
-   `Users`.`Login` AS `Login`,
-   `Users`.`Pass` AS `Pass`,
-   `Users`.`Role` AS `Role`,
-   `Users`.`FirstName` AS `FirstName`,
-   `Users`.`LastName` AS `LastName`,
-   `Users`.`Phone` AS `Phone`,
-   `Users`.`Email` AS `Email`,
-   `Users`.`Lang` AS `Lang`,
-   `Users`.`Commission` AS `Commission`,concat(ifnull(`Users`.`LastName`,''),' ',ifnull(`Users`.`FirstName`,'')) AS `ManagerName`,
-   `Users`.`Inactive` AS `Inactive`,
-   `Users`.`TaskColor` AS `TaskColor`,
-   `Users`.`TelegramChatId` AS `TelegramChatId`
-FROM `Users`;
 
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`zhevak_app`@`%` SQL SECURITY DEFINER VIEW `vHotelDeals`
