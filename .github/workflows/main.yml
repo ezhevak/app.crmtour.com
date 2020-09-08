@@ -14,3 +14,4 @@ jobs:
         password: ${{ secrets.FTP_PASSWORD }}
         localDir: "app"
         remoteDir: "/crmtour.com/tmp"
+        
