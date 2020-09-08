@@ -18,7 +18,6 @@ AS SELECT
    `Users`.`TelegramChatId` AS `TelegramChatId`
 FROM `Users`;
 
-
 DROP VIEW IF EXISTS `vDocuments`;
 CREATE VIEW `vDocuments`
 AS SELECT
@@ -37,7 +36,6 @@ AS SELECT
    `d`.`Biometric` AS `Biometric`,
    `d`.`LastAdd` AS `LastAdd`,(case when (`up`.`Id` is not null) then 1 else 0 end) AS `ScanExists`
 FROM ((`Documents` `d` join `Dictionaries` `ds` on(((`d`.`DocType` = `ds`.`LIC`) and (`d`.`AccId` = `ds`.`AccId`) and (`ds`.`Lang` = 'ru_RU')))) left join `Uploads` `up` on(((`d`.`AccId` = `up`.`AccId`) and (`d`.`Id` = `up`.`ModelId`) and (`up`.`ModelType` = 'documents'))));
-
 
 DROP VIEW IF EXISTS `vAddress`;
 CREATE VIEW `vAddress`
