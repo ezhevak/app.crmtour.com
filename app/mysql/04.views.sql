@@ -534,12 +534,14 @@ AS SELECT
    `ac`.`Name` AS `AccountName`
 FROM ((`SessionLog` `sl` join `vUsers` `u` on((`sl`.`UserId` = `u`.`Id`))) join `Account` `ac` on((`u`.`AccId` = `ac`.`Id`)));
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`zhevak_tmp`@`%` SQL SECURITY DEFINER VIEW `vSysDealNum`
+DROP VIEW IF EXISTS `vSysDealNum`;
+CREATE VIEW `vSysDealNum`
 AS SELECT
    `Deals`.`AccId` AS `AccId`,date_format(`Deals`.`DealDate`,'%Y') AS `mYear`,concat(convert(date_format(now(),'%Y') using utf8mb4),'/',(max(cast(substr(`Deals`.`DealNo`,(locate('/',`Deals`.`DealNo`) + 1),length(`Deals`.`DealNo`)) as unsigned)) + 1)) AS `mNum`
 FROM `Deals` where (date_format(`Deals`.`DealDate`,'%Y') = date_format(now(),'%Y')) group by `Deals`.`AccId`,date_format(`Deals`.`DealDate`,'%Y');
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`zhevak_tmp`@`%` SQL SECURITY DEFINER VIEW `vTasks`
+DROP VIEW IF EXISTS `vTasks`;
+CREATE VIEW `vTasks`
 AS SELECT
    `t`.`Id` AS `Id`,
    `t`.`AccId` AS `AccId`,
@@ -557,7 +559,8 @@ AS SELECT
    `t`.`LastUpdate` AS `LastUpdate`
 FROM `Tasks` `t`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`zhevak_tmp`@`%` SQL SECURITY DEFINER VIEW `vTemplates`
+DROP VIEW IF EXISTS `vTemplates`;
+CREATE VIEW `vTemplates`
 AS SELECT
    `t`.`Id` AS `Id`,
    `t`.`AccId` AS `AccId`,
@@ -568,9 +571,8 @@ AS SELECT
    `t`.`Active` AS `Active`
 FROM (`Templates` `t` join `Dictionaries` `dt` on(((`t`.`Module` = `dt`.`LIC`) and (`t`.`AccId` = `dt`.`AccId`) and (`dt`.`Lang` = 'ru_RU'))));
 
-
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`zhevak_app`@`%` SQL SECURITY DEFINER VIEW `vHotelDeals`
+DROP VIEW IF EXISTS `vHotelDeals`;
+CREATE VIEW `vHotelDeals`
 AS SELECT
    `d`.`HotelId` AS `HotelId`, count(`d`.`Id`) AS `DealsAmount`
 FROM `Deals` `d` group by `d`.`HotelId`;
