@@ -31,9 +31,7 @@ class Controller_Users extends Controller
 		echo $data;
 	}
 
-	function action_save(){
-		
-		
+	function action_save(){		
 		$array = [
 		"Id" => $_POST["Id"],
 		"Login" => $_POST['Login'],
@@ -87,7 +85,7 @@ class Controller_Users extends Controller
 				appsendmail($_POST["Email"],'Поздравляем с успешной регистрацией в системе CRM Tour',"
 						<p>Добрый день, уважаемый <strong>".$_POST["FirstName"]."</strong></p>
 						
-						<p>Вступайте в сообщество 'CRM Tour' в Viber: <a href=\"https://invite.viber.com/?g2=AQAopZ4zN1zpiklD%2F6F5zg7IAmkmD0vdHVKs87PRSPK9GyTh1%2B2%2FCGcq91x2VB9D\" target=\"_blank\">CRM Tour в Viber</a></li></p>
+						<p>Вступайте в сообщество : <a href=\"https://t.me/crmtour\" target=\"_blank\">CRM Tour в Telegram</a></li></p>
 						
 						<p>Для облегчения Вашего знакомства с системой, мы записали несколько стартовых роликов, которые помогут Вам быстрее начать работать с системой:</p>
 						
@@ -113,7 +111,7 @@ class Controller_Users extends Controller
 						<p>В целом это весь процесс.&nbsp;<br />
 						Если у Вас будут любые вопросы или пожелания, ниже мои контакты, я с радостью отвечу на каждый запрос.</p>
 						
-						<p>С уважением, Евгений Жевак<br />
+						<p>С уважением, CRM Tour<br />
 						site: <a href=\"https://crmtour.com/\" target=\"_blank\">https://crmtour.com/</a><br />
 						phone:+38(067)505-8615<br />
 						skype:zhevak</p>");
@@ -141,8 +139,6 @@ class Controller_Users extends Controller
 	function action_login() {
 		
 		
-		
-		
 		if (isset($_POST["user"]) && isset($_POST["pass"]) && isValidCaptcha($_POST["recaptcha_response"])) {
 			session_start();
 			
@@ -156,27 +152,7 @@ class Controller_Users extends Controller
 				header('Content-Type: application/json; charset=utf-8');
 				echo json_encode($data);
 			}
-			
-				
-			
-			
-		//	if ($this->model->login($_POST["user"], $_POST["pass"])) {
-		//   		$_SESSION["USER_NAME"] = $_POST["user"];
-		//		header("Location: /");
-		//	} else {
-		//		$_SESSION["USER_NAME"] = "";
-		//		$this->view->generate('', 'login.php', $data);
-		//	}
 		} else {
-			//echo "1";
-			
-        	//$data["status"] = "error";
-        	//$data["message"] = "Вы не указали логин или пароль!";
-			
-			//header('Content-Type: application/json; charset=utf-8');
-			//echo json_encode(array("status" => "error",
-			//					   "message"=> "Вы не указали логин или пароль!"));
-			
 			$this->view->generate('', 'login.php', $data);
 		}
 	}

@@ -1,5 +1,4 @@
-DROP PROCEDURE prBilling;
-
+DROP PROCEDURE IF EXISTS prBilling;
 DELIMITER ;;
 CREATE PROCEDURE `prBilling`()
     COMMENT 'Ежедневная процедура расчёта задолжености пользователей системы'
@@ -59,7 +58,7 @@ and acc.ReffererId !=0;
 END;;
 DELIMITER ;
 
-DROP PROCEDURE sysSchedulerDaily;
+DROP PROCEDURE IF EXISTS sysSchedulerDaily;
 DELIMITER ;;
 CREATE PROCEDURE `sysSchedulerDaily`()
 BEGIN
@@ -158,7 +157,7 @@ END;;
 DELIMITER ;
 
 
-DROP PROCEDURE sysSchedulerHourly;
+DROP PROCEDURE IF EXISTS sysSchedulerHourly;
 DELIMITER ;;
 CREATE PROCEDURE `sysSchedulerHourly`()
 BEGIN
@@ -181,7 +180,7 @@ set cl.Segment = case
 END;;
 DELIMITER ;
 
-DROP PROCEDURE sysSchedulerQuarterHour;
+DROP PROCEDURE IF EXISTS sysSchedulerQuarterHour;
 DELIMITER ;;
 CREATE PROCEDURE `sysSchedulerQuarterHour`()
 BEGIN

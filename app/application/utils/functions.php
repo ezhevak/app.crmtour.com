@@ -5,7 +5,7 @@
 	    fwrite($fp, print_r(date('Y-m-d H:i:s')." ".$text."\n", true));
 	    fclose($fp);
 	}
-	
+
 //lookupvalue функция которая возвращает значение поля в зависимости от локали
 //function lookupvalue($LIC, $lang){
 //
@@ -115,7 +115,7 @@ function appsendmail($address,$subject,$body) {
 function appsendtelegram($tBotchatId,$tBotText){
 		try {
 			//https://github.com/TelegramBot/Api
-			
+
 			require_once 'vendor/telegrambot/autoload.php';
 			$bot = new \TelegramBot\Api\BotApi($GLOBALS['tBotToken']);
 			$bot->sendMessage($tBotchatId, $tBotText);
@@ -126,7 +126,7 @@ function appsendtelegram($tBotchatId,$tBotText){
 		    //echo 'Выброшено исключение: ',  $e->getMessage(), "\n";
 		}
 	}
- 
+
 
 //Функция реализована в рамках задачи по отправке уведомлений пользователям.
 //http://178.150.16.80:3000/issues/36
@@ -166,14 +166,14 @@ function appsendtelegram($tBotchatId,$tBotText){
 //				$GLOBALS['DB_PASSWORD'],
 //				$GLOBALS['DB_NAME']);
 //		$conn->	set_charset("utf8");//исправляем иероглифы
-//		
+//
 //		// Check connection
 //		if ($conn->connect_error) {
 //			die("Connection failed: " . $conn->connect_error);
 //		}
 //		try {
 //			$value = "0";
-//		
+//
 //			$sql = "select OptionVal from AccountOptions where AccId = ".$AccId." and OptionName = '$OptionName'";
 //			$result = $conn->query($sql);
 //			while( $row = $result->fetch_assoc()){
@@ -190,7 +190,7 @@ function appsendtelegram($tBotchatId,$tBotText){
 
 function GetOption($OptionName,$AccId){
 	if (!empty($OptionName)) {
-		
+
 		require_once ($GLOBALS['RootDir'].'application/mysql/db.php');
 		$mysqli = database::getInstance();
         $db = $mysqli->getConnection();
@@ -212,26 +212,26 @@ function GetOption($OptionName,$AccId){
 //Функция сохранения значения option. Аналог Upsert
 function SetOption($OptionName,$OptionVal,$AccId){
 	if (!empty($OptionName)) {
-		
+
         require_once ($GLOBALS['RootDir'].'application/mysql/db.php');
 		$mysqli = database::getInstance();
         $db = $mysqli->getConnection();
-        
+
 		if(!empty($AccId) && $AccId !=""){
 			$AccIdx = $AccId;
 		} else {
 			$AccIdx = $_SESSION["AccId"];
-		}	
-		
+		}
+
 		$db->where('AccId',$AccIdx);
 		$db->where('OptionName', $OptionName);
 	    $countOptions = $db->getValue("AccountOptions", "count(*)");
-		
+
 		$dataX = array ("AccId" 		=> $AccIdx,
 		                "OptionName"	=> $OptionName,
 		                "OptionVal"		=> $OptionVal
 		);
-		
+
 		if($countOptions =="0"){
 			$id = $db->insert ('AccountOptions', $dataX);
 			if($id){
@@ -323,20 +323,20 @@ function checkMailChimp($email, $apikey, $listid) {
 
 
 function SqlToXls($select){
-	
+
 	$host = $GLOBALS['DB_HOST']; // your db host (ip/dn)
 	$user = $GLOBALS['DB_USER']; // your db's privileged user account
 	$password = $GLOBALS['DB_PASSWORD']; // and it's password
 	$db_name = $GLOBALS['DB_NAME']; // db name
 	$tbl_name = "Account"; // table name of the selected db
-	
+
 	$link = mysql_connect ($host, $user, $password) or die('Could not connect: ' . mysql_error());
 	mysql_select_db($db_name) or die('Could not select database');
-	
 
-	
+
+
 	mysql_query('SET NAMES utf8;');
-	$export = mysql_query($select); 
+	$export = mysql_query($select);
 	//$fields = mysql_num_rows($export); // thanks to Eric
 	$fields = mysql_num_fields($export); // by KAOSFORGE
 	$col_title="";
@@ -344,9 +344,9 @@ function SqlToXls($select){
 	for ($i = 0; $i < $fields; $i++) {
 	    $col_title .= '<Cell ss:StyleID="2"><Data ss:Type="String">'.mysql_field_name($export, $i).'</Data></Cell>';
 	}
-	
+
 	$col_title = '<Row>'.$col_title.'</Row>';
-	
+
 	while($row = mysql_fetch_row($export)) {
 	    $line = '';
 	    foreach($row as $value) {
@@ -360,14 +360,14 @@ function SqlToXls($select){
 	    }
 	    $data .= trim("<Row>".$line."</Row>")."\n";
 	}
-	
+
 	$data = str_replace("\r","",$data);
-	
+
 	header("Content-Type: application/vnd.ms-excel;");
 	header("Content-Disposition: attachment; filename=export.xlsx");
 	header("Pragma: no-cache");
 	header("Expires: 0");
-	
+
 	$xls_header = '<?xml version="1.0" encoding="utf-8"?>
 	<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" xmlns:html="http://www.w3.org/TR/REC-html40">
 	<DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
@@ -383,11 +383,11 @@ function SqlToXls($select){
 	<Alignment ss:Horizontal="Left"/>
 	<Font ss:Bold="1"/>
 	</Style>
-	
+
 	</Styles>
 	<Worksheet ss:Name="Export">
 	<Table>';
-	
+
 	$xls_footer = '</Table>
 	<WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
 	<Selected/>
@@ -398,7 +398,7 @@ function SqlToXls($select){
 	</WorksheetOptions>
 	</Worksheet>
 	</Workbook>';
-	
+
 	print $xls_header.$col_title.$data.$xls_footer;
 	exit;
 }
@@ -423,7 +423,7 @@ function uniqidReal($lenght = 13) {
 //		$dte = new DateTime;
 //		$dte->setDate(date('Y'),date('m'),date('d')+1)->setTime(21, 0)->format('Y-m-d H:i:s');
 //		$dte->setTime(21, 15);
-//		
+//
 //		$start = $dts->format('Y-m-d H:i:s');
 //		$end   = $dte->format('Y-m-d H:i:s');
 //		require('application/models/model_srvtasks.php');
@@ -438,7 +438,7 @@ function uniqidReal($lenght = 13) {
 //
 //		$srvTask = new Model_srvtasks();
 //		$res = $srvTask->add($array);
-//	
+//
 //		//echo json_encode($res);
 //		if ($res["status"] == "success") {
 //			$res = true;
@@ -447,7 +447,7 @@ function uniqidReal($lenght = 13) {
 //			$res["message"] == $res["message"];
 //		}
 //		unset($srvTask);
-//		
+//
 //	} catch(Exception $e) {
 //			echo 'Выброшено исключение: '.$e->getMessage();
 //	}
@@ -467,7 +467,7 @@ function getUserData($UserId){
 	$db->where("Id", $UserId);
 	$cols = array("Id", "BranchId","Login", "Role","FirstName","LastName","Phone","Email","Commission","ManagerName","Inactive","TelegramChatId");
 	$data = $db->get("vUsers", null, $cols);
-	
+
 	$db->disconnect();
 	//header('Content-Type: application/json; charset=utf-8');
 	return $data;
@@ -484,9 +484,9 @@ function getAdminUserEmail() {
         //$db->where('Id', array(1, 2), 'not in');
         $db->orderBy("Created","asc");
         $data = $db->get("Users",null,$cols);
-        
+
 		$db->disconnect();
-		
+
 		return $data;
 	}
 
@@ -502,7 +502,7 @@ function getAdminUserEmail() {
 	  $s = str_replace(" ", "-", $s); // заменяем пробелы знаком минус
 	  return $s; // возвращаем результат
 	}
-	
+
 	function removeDirectory($dir) {
 		if ($objs = glob($dir."/*")) {
 		   foreach($objs as $obj) {
@@ -511,30 +511,33 @@ function getAdminUserEmail() {
 		}
 		rmdir($dir);
 	}
-	
+
 	function isValidCaptcha($response){
-		
-		$isValidCaptcha = false;
-		
-		$url = 'https://www.google.com/recaptcha/api/siteverify';
-		
-        $secret = $GLOBALS['recaptchaSecret'];
-        $recaptcha_response = $response;
-        
-        
-        $contents = file_get_contents("$url?secret=$secret&response=$recaptcha_response");
-		 
-		//If $contents is not a boolean FALSE value.
-		if($contents !== false){
-		    //Print out the contents.
-		    $recaptcha = json_decode($contents);
-		    if (isset($recaptcha->success) && $recaptcha->success == false) return false;
-        
-        	return ($recaptcha->score >= 0.5) ? true : false;
+
+		if($GLOBALS['recaptchaSecret'] !=""){
+
+			$isValidCaptcha = false;
+
+			$url = 'https://www.google.com/recaptcha/api/siteverify';
+			$secret = $GLOBALS['recaptchaSecret'];
+			$recaptcha_response = $response;
+
+
+			$contents = file_get_contents("$url?secret=$secret&response=$recaptcha_response");
+
+			//If $contents is not a boolean FALSE value.
+			if($contents !== false){
+				//Print out the contents.
+				$recaptcha = json_decode($contents);
+				if (isset($recaptcha->success) && $recaptcha->success == false) return false;
+
+				return ($recaptcha->score >= 0.5) ? true : false;
+			}
+		} else {
+			return true;
 		}
-		
 	}
-	
+
 
 
 ?>

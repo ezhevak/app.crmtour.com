@@ -20,7 +20,7 @@ CREATE TABLE `Account` (
   `LastUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Дата обновления записи',
   `LastLogIn` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Последний вход в систему',
   PRIMARY KEY (`Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=336 DEFAULT CHARSET=utf8 COMMENT='Таблица всех клиентов.';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Таблица всех клиентов.';
 
 CREATE TABLE `AccountBranches` (
   `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id отделения',
@@ -45,7 +45,7 @@ CREATE TABLE `AccountBranches` (
   `LastUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Дата обновления записи',
   PRIMARY KEY (`Id`),
   KEY `Idx` (`AccId`)
-) ENGINE=MyISAM AUTO_INCREMENT=254 DEFAULT CHARSET=utf8 COMMENT='Таблица филиалов';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Таблица филиалов';
 
 CREATE TABLE `AccountOptions` (
   `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Идентификатор',
@@ -58,7 +58,7 @@ CREATE TABLE `AccountOptions` (
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Unique` (`AccId`,`OptionName`),
   KEY `idx` (`AccId`,`OptionName`)
-) ENGINE=MyISAM AUTO_INCREMENT=1356 DEFAULT CHARSET=utf8 COMMENT='Таблица платежей по юр лицам';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Таблица платежей по юр лицам';
 
 CREATE TABLE `Actions` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
@@ -74,7 +74,7 @@ CREATE TABLE `Actions` (
   `LastUpdated` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
   KEY `idx` (`AccId`,`ModelType`,`ModelId`)
-) ENGINE=MyISAM AUTO_INCREMENT=9159 DEFAULT CHARSET=utf8 COMMENT='Таблицв действий с клиентами';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Таблицв действий с клиентами';
 
 CREATE TABLE `Address` (
   `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id адреса',
@@ -95,7 +95,7 @@ CREATE TABLE `Address` (
   `NextSync` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Дата следующей синхронизации MailChimp',
   PRIMARY KEY (`Id`),
   KEY `idx` (`AccId`,`ContactId`,`Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=33982 DEFAULT CHARSET=utf8 COMMENT='Таблица телефонов и Email';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Таблица телефонов и Email';
 
 CREATE TABLE `Airport` (
   `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id записи',
@@ -111,7 +111,7 @@ CREATE TABLE `Airport` (
   `LastUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
   UNIQUE KEY `AirportCode` (`AirportCode`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=205 DEFAULT CHARSET=utf8 COMMENT='Таблица аэропортов';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Таблица аэропортов';
 
 CREATE TABLE `Contacts` (
   `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id Клиента',
@@ -133,7 +133,7 @@ CREATE TABLE `Contacts` (
   `LastUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Дата обновления записи',
   PRIMARY KEY (`Id`),
   KEY `idxAccId` (`AccId`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=38793 DEFAULT CHARSET=utf8 COMMENT='Все контакты в системе';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Все контакты в системе';
 
 CREATE TABLE `ContactToContact` (
   `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id связи',
@@ -145,7 +145,7 @@ CREATE TABLE `ContactToContact` (
   `LastUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Дата обновления записи',
   PRIMARY KEY (`Id`),
   KEY `idx` (`AccId`,`ContactId`,`ParrContactId`)
-) ENGINE=MyISAM AUTO_INCREMENT=26464 DEFAULT CHARSET=utf8 COMMENT='Таблица связей контакты к контактам.';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Таблица связей контакты к контактам.';
 
 CREATE TABLE `DealParticipants` (
   `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id записи',
@@ -157,7 +157,7 @@ CREATE TABLE `DealParticipants` (
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Unique` (`AccId`,`DealId`,`ContactId`),
   KEY `idx` (`AccId`,`DealId`,`ContactId`)
-) ENGINE=MyISAM AUTO_INCREMENT=26233 DEFAULT CHARSET=utf8 COMMENT='Участники по сделке';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Участники по сделке';
 
 CREATE TABLE `Deals` (
   `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id сделки',
@@ -220,7 +220,7 @@ CREATE TABLE `Deals` (
   `LastUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Дата обновления записи',
   PRIMARY KEY (`Id`),
   KEY `idxMain` (`AccId`,`ContactId`,`LegalId`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=21072 DEFAULT CHARSET=utf8 COMMENT='Таблица сделок';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Таблица сделок';
 
 CREATE TABLE `Dictionaries` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
@@ -237,7 +237,7 @@ CREATE TABLE `Dictionaries` (
   PRIMARY KEY (`Id`),
   UNIQUE KEY `idx_unique` (`AccId`,`Type`,`Lang`,`LIC`) USING BTREE,
   KEY `idxx` (`AccId`,`LIC`)
-) ENGINE=MyISAM AUTO_INCREMENT=49521 DEFAULT CHARSET=utf8 COMMENT='Таблица справочников';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Таблица справочников';
 
 CREATE TABLE `dimDirection` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
@@ -253,7 +253,7 @@ CREATE TABLE `dimDirection` (
   `LastUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Дата обновления записи',
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Unique` (`DirectionName`)
-) ENGINE=MyISAM AUTO_INCREMENT=286 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `dimHotels` (
   `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id отеля',
@@ -280,7 +280,7 @@ CREATE TABLE `dimHotels` (
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Unique` (`AccId`,`DirectionId`,`HotelName`),
   KEY `idx` (`AccId`,`DirectionId`,`RegionId`)
-) ENGINE=MyISAM AUTO_INCREMENT=83302 DEFAULT CHARSET=utf8 COMMENT='Справочник отелей по странам';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Справочник отелей по странам';
 
 CREATE TABLE `dimOperators` (
   `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id оператора',
@@ -304,7 +304,7 @@ CREATE TABLE `dimOperators` (
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Unique` (`AccId`,`Name`),
   KEY `idx` (`AccId`)
-) ENGINE=MyISAM AUTO_INCREMENT=20000 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `dimRegion` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
@@ -318,7 +318,7 @@ CREATE TABLE `dimRegion` (
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Unique` (`AccId`,`DirectionId`,`RegionName`),
   KEY `idx` (`AccId`,`DirectionId`)
-) ENGINE=MyISAM AUTO_INCREMENT=65889 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `Documents` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
@@ -340,7 +340,7 @@ CREATE TABLE `Documents` (
   `LastUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Дата обновления записи',
   PRIMARY KEY (`Id`),
   KEY `idx` (`AccId`,`ContactId`)
-) ENGINE=MyISAM AUTO_INCREMENT=36010 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `Embassy` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
@@ -356,7 +356,7 @@ CREATE TABLE `Embassy` (
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Unique` (`DirectionId`,`AccId`),
   KEY `idx` (`AccId`,`DirectionId`)
-) ENGINE=MyISAM AUTO_INCREMENT=89 DEFAULT CHARSET=utf8 COMMENT='Информация по посольствам';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Информация по посольствам';
 
 CREATE TABLE `Leads` (
   `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
@@ -383,7 +383,7 @@ CREATE TABLE `Leads` (
   `LastUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Дата обновления записи',
   PRIMARY KEY (`Id`),
   KEY `idx` (`AccId`,`BranchId`)
-) ENGINE=MyISAM AUTO_INCREMENT=12953 DEFAULT CHARSET=utf8 COMMENT='Таблица содержит предварительные данные по клиентам ';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Таблица содержит предварительные данные по клиентам ';
 
 CREATE TABLE `Legals` (
   `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id Юр. лица',
@@ -415,7 +415,7 @@ CREATE TABLE `Legals` (
   `LastUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Дата обновления записи',
   PRIMARY KEY (`Id`),
   KEY `idx` (`AccId`)
-) ENGINE=MyISAM AUTO_INCREMENT=759 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `LegalToContact` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
@@ -427,7 +427,7 @@ CREATE TABLE `LegalToContact` (
   `LinkType` varchar(50) DEFAULT NULL COMMENT 'Тип связи',
   PRIMARY KEY (`Id`),
   KEY `idx` (`AccId`,`LegalId`,`ContactId`)
-) ENGINE=MyISAM AUTO_INCREMENT=112 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `Notes` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
@@ -439,7 +439,7 @@ CREATE TABLE `Notes` (
   `LastUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
   KEY `idx` (`AccId`)
-) ENGINE=MyISAM AUTO_INCREMENT=144 DEFAULT CHARSET=utf8 COMMENT='Заметки менеджера';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Заметки менеджера';
 
 CREATE TABLE `OperatorsDirections` (
   `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id записи',
@@ -468,7 +468,7 @@ CREATE TABLE `Payments` (
   `Payer` varchar(255) NOT NULL COMMENT 'ФИО плательщика',
   PRIMARY KEY (`Id`),
   KEY `idx` (`AccId`,`DealId`)
-) ENGINE=MyISAM AUTO_INCREMENT=17988 DEFAULT CHARSET=utf8 COMMENT='Платежи по сделкам';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Платежи по сделкам';
 
 CREATE TABLE `SessionLog` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
@@ -480,7 +480,7 @@ CREATE TABLE `SessionLog` (
   `Platform` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`Id`),
   KEY `idx` (`UserId`,`LogOut`,`Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=46343 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `SrvTasks` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
@@ -496,7 +496,7 @@ CREATE TABLE `SrvTasks` (
   `LastUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
   KEY `idx` (`AccId`,`CreatorId`)
-) ENGINE=MyISAM AUTO_INCREMENT=5910 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `Tasks` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
@@ -515,7 +515,7 @@ CREATE TABLE `Tasks` (
   `LastUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
   KEY `idxAccId` (`AccId`)
-) ENGINE=MyISAM AUTO_INCREMENT=58145 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `Templates` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
@@ -529,7 +529,7 @@ CREATE TABLE `Templates` (
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Unique` (`AccId`,`Module`,`Name`),
   KEY `idx` (`AccId`,`Module`,`Active`)
-) ENGINE=MyISAM AUTO_INCREMENT=1640 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `Uploads` (
   `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id записи',
@@ -545,7 +545,7 @@ CREATE TABLE `Uploads` (
   `LastUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
   KEY `idx` (`AccId`,`ModelType`,`ModelId`)
-) ENGINE=MyISAM AUTO_INCREMENT=3839 DEFAULT CHARSET=utf8 COMMENT='Таблица файлов';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Таблица файлов';
 
 CREATE TABLE `Users` (
   `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id',
@@ -568,7 +568,7 @@ CREATE TABLE `Users` (
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Login` (`Login`),
   KEY `AccId` (`AccId`,`Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1508 DEFAULT CHARSET=utf8 COMMENT='Сотрудники организациии';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Сотрудники организациии';
 
 CREATE TABLE `UsersBranches` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
@@ -579,7 +579,7 @@ CREATE TABLE `UsersBranches` (
   `Created` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `LastUpdated` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=535 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `UsersToken` (
   `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Id',
@@ -588,4 +588,4 @@ CREATE TABLE `UsersToken` (
   `Email` varchar(50) NOT NULL,
   `Login` varchar(50) NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=71 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
