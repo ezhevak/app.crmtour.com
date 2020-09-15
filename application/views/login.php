@@ -281,12 +281,12 @@
 	</script>
 	
 	
-	<script src='https://www.google.com/recaptcha/api.js?render=&onload=onloadCallback&render=explicit'></script>
+	<script src='https://www.google.com/recaptcha/api.js?render=<? echo $GLOBALS['recaptchaSite'] ?>&onload=onloadCallback&render=explicit'></script>
 	
 	<script>
 	      function onloadCallback() {
 	      grecaptcha.ready(function() {
-	        grecaptcha.execute('', {
+	        grecaptcha.execute('<? echo $GLOBALS['recaptchaSite'] ?>', {
 	          action: 'login'
 	        }).then(function (token) {
 	          var recaptchaResponseLogin = document.getElementById('recaptcha_response_login');
@@ -297,8 +297,5 @@
 	      });
 	    }
 	</script>
-	
-	
-	
   </body>
 </html>
