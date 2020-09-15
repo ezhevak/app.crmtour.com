@@ -12,4 +12,3 @@ jobs:
         url: ${{ secrets.FTP_URL }}
         user: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        options: "changed-only"
