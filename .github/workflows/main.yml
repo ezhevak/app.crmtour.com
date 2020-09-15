@@ -9,8 +9,7 @@ jobs:
     - name: Upload ftp
       uses: sebastianpopp/ftp-action@releases/v3
       with:
-        host: ${{ secrets.FTP_SERVER }}
+        url: ${{ secrets.FTP_URL }}
         user: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        remoteDir: "/crmtour.com/app"
         options: --changed-only
