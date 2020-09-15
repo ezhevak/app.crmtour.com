@@ -166,6 +166,7 @@
 		include_once("analyticstracking.php");
 	}
 ?>
+
 <input type="hidden" id="GlobalUserId" name="GlobalUserId" value="<?php echo $_SESSION['UserId'];?>">
 <input type="hidden" id="GlobalAccId" name="GlobalAccId" value="<?php echo $_SESSION['AccId'];?>">
 <input type="hidden" id="GlobalUserRole" name="GlobalUserRole" value="<?php echo $_SESSION['UserRole'];?>">
