@@ -4,7 +4,7 @@
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-72326812-7', 'auto');
+  ga('create', <?php echo "'".$GLOBALS['gaCode']."'" ?>, 'auto');
   ga('send', 'pageview');
 
 </script>

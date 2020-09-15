@@ -514,7 +514,7 @@ function getAdminUserEmail() {
 
 	function isValidCaptcha($response){
 
-		if($GLOBALS['recaptchaSecret'] !=""){
+		if($GLOBALS['recaptchaSecret'] != "" && $GLOBALS['recaptchaSite'] != ""){
 
 			$isValidCaptcha = false;
 

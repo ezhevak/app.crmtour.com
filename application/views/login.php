@@ -21,7 +21,12 @@
     <!-- Custom Theme Style -->
     <link href="../css/custom.min.css" rel="stylesheet">
     
-	<?php include_once("analyticstracking.php") ?>
+	
+  <?php
+    if($GLOBALS['gaCode'] != "") {
+      include_once("analyticstracking.php");
+    }
+  ?>
   </head>
 
   <body class="login">

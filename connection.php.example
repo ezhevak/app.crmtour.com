@@ -11,5 +11,7 @@
 	$GLOBALS['MailUser'] ='';
 	$GLOBALS['MailPass'] ='';
 	$GLOBALS['Email'] ='';	
+	$GLOBALS['recaptchaSite'] ='';
 	$GLOBALS['recaptchaSecret'] ='';
+	$GLOBALS['gaCode'] =''; //код Google analytics
 ?>
