@@ -40,7 +40,7 @@ class Model_Hotels extends Model
 						"HotelBeach"  => $data["HotelBeach"],
 						"Comments"	  => $data["Comments"],
 						"HotelType"   => $data["HotelType"],
-						"HotelTripAdvisor" => $data["HotelTripAdvisor"],
+						//"HotelTripAdvisor" => $data["HotelTripAdvisor"],
 						"HotelBeachLine" => $data["HotelBeachLine"],
 						"HotelJurAddress" => $data["HotelJurAddress"],
 						"HotelJurName" =>$data["HotelJurName"]					

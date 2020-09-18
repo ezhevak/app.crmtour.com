@@ -87,17 +87,13 @@ class Controller_Hotels extends Controller
 			"Comments" => $_POST["Comments"],
 			"HotelType" => $_POST["HotelType"],
 			"HotelBeachLine" => $_POST["HotelBeachLine"],
-			"HotelTripAdvisor" => $_POST["HotelTripAdvisor"],
-			"TripAdvisorLink" => $_POST["TripAdvisorLink"],
+			//"HotelTripAdvisor" => $_POST["HotelTripAdvisor"],
+			//"TripAdvisorLink" => $_POST["TripAdvisorLink"],
 			"HotelJurAddress" => $_POST["HotelJurAddress"],
 			"HotelJurName" => $_POST["HotelJurName"]
 		];
 		
 		$data = $this->model->add($array);
-		//echo json_encode($array);
-		//session_start();
-		//$_SESSION["APP_STATUS"] = $data["status"];
-		//$_SESSION['APP_MESSAGE'] = $data["message"];
 		
 		if ($data["status"] == "success") {
 			

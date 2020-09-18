@@ -69,8 +69,8 @@
     <link href="/vendor/nprogress/nprogress.css" rel="stylesheet">
     
     <!-- Custom Theme Style -->
-    <link href="/css/custom.min.css?version=165" rel="stylesheet">
-    <link rel="stylesheet" href="/css/styles.css?version=165">
+    <link href="/css/custom.min.css?version=<?php echo "100".substr(sha1('someString'.date('Ymd')),0,5); ?>" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css?version=<?php echo "100".substr(sha1('someString'.date('Ymd')),0,5); ?>">
     
     <style>
 		#view_div {
@@ -422,11 +422,12 @@
 	}
 ?>
 
-	<script src="/application/js/lib/main.js?version=299"></script>
+	<script src="/application/js/lib/main.js?version=<?php echo "100".substr(sha1('someString'.date('Ymd')),0,5); ?>"></script>
 
 <?php
+	$version = "100".substr(sha1('someString'.date('Ymd')),0,5);
 	foreach ($used_js as $jsfile) {
-		echo "<script src=\"/application/js/".$jsfile.".js?version=299\"></script>\n";
+		echo "<script src='/application/js/".$jsfile.".js?version=".$version."'></script>\n";
 	}
 ?>
 
