@@ -574,3 +574,10 @@ CREATE VIEW `vHotelDeals`
 AS SELECT
    `d`.`HotelId` AS `HotelId`, count(`d`.`Id`) AS `DealsAmount`
 FROM `Deals` `d` group by `d`.`HotelId`;
+
+DROP VIEW IF EXISTS `vOperatorDeals`;
+CREATE VIEW `vOperatorDeals`
+AS SELECT
+   `d`.`OperatorId` AS `OperatorId`,count(`d`.`Id`) AS `DealsAmount`
+FROM `Deals` `d` 
+group by `d`.`OperatorId`;

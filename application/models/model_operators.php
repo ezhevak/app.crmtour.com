@@ -93,9 +93,14 @@ class Model_Operators extends Model
 		$mysqli = database::getInstance();
         $db = $mysqli->getConnection();
         
-		$cols = array ("Id", "Name","Phone", "Email", "WebSite", "Login","Pass");
-		$db->where('AccId', $_SESSION['AccId']);
-		$json = $db->JsonBuilder()->get("vOperators", null, $cols);
+		$cols = array ("vp.Id", "vp.Name", "vp.Phone", "vp.Email", "vp.WebSite", "vp.Login", "vp.Pass", "vod.DealsAmount");
+		$dealsQ = $db->subQuery ("vod");
+		$dealsQ->get ("vOperatorDeals");
+		
+		$db->join($dealsQ, "vp.Id = vod.OperatorId", "LEFT");
+		
+		$db->where('vp.AccId', $_SESSION['AccId']);
+		$json = $db->JsonBuilder()->get("vOperators vp", null, $cols);
 		$db->disconnect();
 		
 		header('Content-Type: application/json; charset=utf-8');

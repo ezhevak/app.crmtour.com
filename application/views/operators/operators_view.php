@@ -17,6 +17,7 @@
 		        <th>Сайт</th>
 		        <th>Login</th>
 		        <th>Пароль</th>
+		        <th>Сделки</th>
 		        <th>Действия</th>
 		    </tr>
 		  </thead>
