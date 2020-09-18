@@ -96,7 +96,11 @@ function editLinkId(data, type, row, meta){
 }
 function editLinkName(data, type, row, meta){
 	if(type === 'display'){
-        data = '<a href="/hotels/add?Id=' + row["Id"] + '">' + row["HotelName"] +" " + row["HotelStarsName"]+'</a>';
+		let stars = "";
+		if(row["HotelStarsName"] != null){
+			stars = row["HotelStarsName"];
+		}
+        data = '<a href="/hotels/add?Id=' + row["Id"] + '">' + row["HotelName"] +" " + stars +'</a>';
     }
     return data;
 }
@@ -142,18 +146,3 @@ function deleteRecord(row) {
 		});
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
