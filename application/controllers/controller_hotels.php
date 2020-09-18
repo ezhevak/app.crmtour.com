@@ -30,11 +30,12 @@ class Controller_Hotels extends Controller
  
 		$data = $this->model->get_row($Id);
 	
+	//	echo json_encode($data);
 		
 		if (empty($data)) {
 			$data[0]["Id"] = "";
-			$data[0]["HotelRating"] = "Perfect";
-			$data[0]["HotelStars"] = "5";
+			//$data[0]["HotelRating"] = "Perfect";
+			//$data[0]["HotelStars"] = "5";
 		} else {
 			//получаем информацию по связанным файлам
 			include_once "application/models/model_uploads.php";

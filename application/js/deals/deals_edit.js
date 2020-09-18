@@ -392,7 +392,7 @@ function on_load() {
 	$('#addHotelBeachLine').select2({
     	theme: "bootstrap",
     	allowClear: true,
-		placeholder: 'Укажите линую пляжа',
+		placeholder: 'Укажите линию пляжа',
 		multiple: false,
 		ajax: {
 		  url: '/dictionary/getDictionaryListItems?type=HotelBeachLine',
