@@ -584,7 +584,7 @@ $x_title = "Форма редактирования сделки <a href='/conta
 											<div class="form-group">
 											      <label for="DealDate">Дата:</label>
 												<div class="input-group">
-											    	<input type="text" class="form-control" id="DealDate" name="DealDate" value="<?php if($data[0]["DealDate"] !=="00.00.0000") { echo toFormat("d.m.Y","d.m.Y",$data[0]["DealDate"]);} ?>" data-toggle="tooltip" data-html="true" data-placement="bottom" title="<b>'Дата сделки'</b> проставляется автоматически, но вы можете ее <em>изменить</em>."> 
+											    	<input type="text" class="form-control" id="DealDate" name="DealDate" value="<?php if($data[0]["DealDate"] !=="00.00.0000") { echo toFormat("d.m.Y","d.m.Y",$data[0]["DealDate"]);} ?>"> 
 											    	<span class="input-group-addon btn"><i class="glyphicon glyphicon-calendar"></i></span>
 											    </div>
 										    </div>
@@ -593,7 +593,7 @@ $x_title = "Форма редактирования сделки <a href='/conta
 									    <div class="col-md-2 col-sm-3 col-xs-12">
 											<div class="form-group">
 												<label for="DealNo">№ сделки</label>
-										    	<input type="text" class="form-control" id="DealNo" name="DealNo" value="<?php echo $data[0]["DealNo"]; ?>" data-toggle="tooltip" data-html="true" data-placement="bottom" title="<b>'№ сделки'</b> проставляется автоматически, но вы можете его <em>изменить</em>.">
+										    	<input type="text" class="form-control" id="DealNo" name="DealNo" value="<?php echo $data[0]["DealNo"]; ?>">
 										    </div>
 									    </div>
 									  	
@@ -1136,29 +1136,6 @@ $x_title = "Форма редактирования сделки <a href='/conta
 								</div>
 								</div>
 							</div>
-							<!--div class="panel">
-								<a class="panel-heading collapsed" role="tab" id="heading05" data-toggle="collapse" data-parent="#accordion" href="#collapse05" aria-expanded="true" aria-controls="collapse05">
-									<h4 class="panel-title">Участники поездки</h4>
-								</a>
-								<div id="collapse05" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading05">
-									<div class="panel-body">
-	
-									</div>
-								</div>
-							</div>
-		
-							<div class="panel">
-								<a class="panel-heading collapsed" role="tab" id="heading06" data-toggle="collapse" data-parent="#accordion" href="#collapse06" aria-expanded="true" aria-controls="collapse06">
-								<h4 class="panel-title">Вложения</h4>
-								</a>
-								<div id="collapse06" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading06">
-									<div class="panel-body">
-										
-										
-										
-									</div>
-								</div>
-							</div-->
 						</div>	
 					<div class="ln_solid"></div>
 					<div class="form-group">

@@ -6,9 +6,6 @@ function on_load() {
 		//console.log("1");
 		document.title = "CRM Tour - сделка " + $("#DealNo").val() + " " + $("#ContactPickFirstName").val() + " " +$("#ContactPickLastName").val();
 	}
-	//if(document.getElementById("ContactId").value !=""){
-	//	document.title = "CRM Tour - сделка "+document.getElementById("DealNo").value + " " + document.getElementById("ContactPickFirstName").value + " " + document.getElementById("ContactPickLastName").value;
-	//}
 
 	//Подключаем поиск по select	
 	$(".js-example-basic-single").select2({
