@@ -561,7 +561,6 @@ $x_title = "Форма редактирования сделки <a href='/conta
 	</div>
 	<!--Форма добавления нового справочника-->
 	
-	
 	<dim class="row">
 		<div class="x_panel">
 		<div class="x_title"><h2><?php echo $x_title;?></h2>
