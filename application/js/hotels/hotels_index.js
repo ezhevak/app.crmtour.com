@@ -50,7 +50,7 @@ var table = $('#datatable-responsive').DataTable( {
 		        "width": "10%"
             },
             { 
-            	"data": "HotelBeachName",
+            	"data": "HotelRating",
 		        "responsivePriority": 5,
 		        "width": "10%"
             },
