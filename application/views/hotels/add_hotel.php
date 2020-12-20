@@ -200,7 +200,7 @@
 					dataType: "json",
 					async:false
 				})).done(function(res) { 
-					console.log(res)
+					//console.log(res)
 					if (res.status == "success") {
 						var regionName = document.getElementById("RegionName");
 						var option = document.createElement("option");
