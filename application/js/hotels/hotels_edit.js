@@ -148,23 +148,23 @@ $(document).ready(function() {
 	});
 	
 
-	$('#HotelRating').select2({
-    	theme: "bootstrap",
-    	allowClear: true,
-		placeholder: 'Укажите оценку отеля',
-		multiple: false,
-		ajax: {
-		  url: '/dictionary/getDictionaryListItems?type=Rating',
-		  dataType: 'json',
-		  delay: 250,
-		  processResults: function (data) {
-		    return {
-		      results: data
-		    };
-		  },
-		  cache: true,
-		}
-	});
+	//$('#HotelRating').select2({
+    //	theme: "bootstrap",
+    //	allowClear: true,
+	//	placeholder: 'Укажите оценку отеля',
+	//	multiple: false,
+	//	ajax: {
+	//	  url: '/dictionary/getDictionaryListItems?type=Rating',
+	//	  dataType: 'json',
+	//	  delay: 250,
+	//	  processResults: function (data) {
+	//	    return {
+	//	      results: data
+	//	    };
+	//	  },
+	//	  cache: true,
+	//	}
+	//});
 	
 	
 	$('#HotelBeach').select2({

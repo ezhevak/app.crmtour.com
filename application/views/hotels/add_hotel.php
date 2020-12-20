@@ -60,14 +60,27 @@
 				<input type="text" class="form-control" id="HotelWebSite" name="HotelWebSite" value="<?php echo $data[0]["HotelWebSite"]; ?>">
 			</div>
 			
+			
 		    <div class="col-md-2 col-xs-12">
+				<div class="form-group">
+					<label for="HotelRating">Оценка booking:</label>
+					<input type="text" class="form-control" id="HotelRating" name="HotelRating" value="<?php echo $data[0]["HotelRating"]; ?>">
+					
+					<!--select class="form-control" id="HotelRating" name="HotelRating">
+						
+							<option selected value='<?php echo $data[0]["HotelRating"]; ?>'><?php echo $data[0]["HotelRatingName"]; ?></option>
+					</select-->
+				</div>
+		    </div>
+
+		    <!--div class="col-md-2 col-xs-12">
 				<div class="form-group">
 					<label for="HotelRating">Оценка отеля:</label>
 					<select class="form-control" id="HotelRating" name="HotelRating">
 							<option selected value='<?php echo $data[0]["HotelRating"]; ?>'><?php echo $data[0]["HotelRatingName"]; ?></option>
 					</select>
 				</div>
-		    </div>
+		    </div-->
 		    
 		    
 				    

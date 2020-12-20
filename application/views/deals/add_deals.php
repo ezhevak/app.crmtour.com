@@ -459,13 +459,20 @@ $x_title = "Форма редактирования сделки <a href='/conta
 						</div>
 				    </div>
 				    
-				    <div class="col-md-12 col-xs-12">
+					<div class="col-md-12 col-xs-12">
+						<div class="form-group">
+							<label for="addHotelRating">Оценка booking:</label>
+							<input type="text" class="form-control" id="addHotelRating" name="addHotelRating" placeholder="8.1">
+						</div>
+				    </div>
+
+				    <!--div class="col-md-12 col-xs-12">
 						<div class="form-group">
 							<label for="addHotelRating">Оценка отеля:</label>
 							<select class="form-control" id="addHotelRating" name="addHotelRating">
 							</select>
 						</div>
-				    </div>	
+				    </div-->	
 				    
 				    <div class="col-md-12 col-xs-12">
 						<div class="form-group">
