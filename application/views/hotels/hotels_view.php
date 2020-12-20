@@ -12,7 +12,7 @@
 		        <th>Название</th>
 		        <th>Страна</th>
 		        <th>Регион</th>
-		        <th>Booking</th>
+		        <th>Booking rating</th>
 		        <th>Booking search</th>
 		        <th>Карта</th>
 		        <th>Сайт</th>
