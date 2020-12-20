@@ -55,6 +55,12 @@ var table = $('#datatable-responsive').DataTable( {
 		        "width": "10%"
             },
             { 
+            	"data": "HotelName",
+            	"render" : editBookingSearch,
+		        "responsivePriority": 2,
+		        "width": "25%"
+            },
+            { 
             	"data": "ScanExists",
             	"render" : getUploadLink,
 		        "responsivePriority": 6,
@@ -104,6 +110,19 @@ function editLinkName(data, type, row, meta){
     }
     return data;
 }
+
+
+function editBookingSearch(data, type, row, meta){
+	if(type === 'display'){
+		let stars = "";
+		if(row["HotelStarsName"] != null){
+			stars = row["HotelStarsName"];
+		}
+        data = '<a href="https://www.booking.com/searchresults.ru.html?ss=' + row["HotelName"] + '" target=\"_blank\"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a>';
+    }
+    return data;
+}
+
 
 function getUploadLink(data, type, row, meta) {
 	//console.log(rowdata);

@@ -13,6 +13,7 @@
 		        <th>Страна</th>
 		        <th>Регион</th>
 		        <th>Booking</th>
+		        <th>Booking search</th>
 		        <th>Карта</th>
 		        <th>Сайт</th>
 		        <th>Сделки</th>
