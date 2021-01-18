@@ -121,7 +121,8 @@ class Controller_Hotels extends Controller
 				$uploaddata = $upload->add($file);
 			}
 			//echo json_encode($uploaddata);
-			header('Location: /hotels/add?Id='.$data["Id"]);
+			//header('Location: /hotels/add?Id='.$data["Id"]);
+			header('Location: /hotels');
 			
 		} else {
 			$this->action_add($_POST["Id"]);
