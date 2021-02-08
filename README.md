@@ -19,3 +19,6 @@ CRM система для туристических компаний
 4. Важно! Версия PHP 5.6!
 5. Поздравляем с успешной установкой. Переходите на страницу регистрации компании. После регистрации используйте введённые данные и начинайте работу в системе.
 6. Переходим на сайт <a href="https://www.google.com/recaptcha/admin/create">reCAPTCHA</a> и создаём новую reCAPTCHA v3. recaptchaSite и recaptchaSecret сохраняем в файл connection.php
+
+# Дополнительные плагины
+- https://github.com/ThingEngineer/PHP-MySQLi-Database-Class - для работы с бд
