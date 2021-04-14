@@ -14,5 +14,4 @@
 	$GLOBALS['recaptchaSite'] ='';
 	$GLOBALS['recaptchaSecret'] ='';
 	$GLOBALS['gaCode'] =''; //код Google analytics
-	//test
 ?>
