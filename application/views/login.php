@@ -198,6 +198,7 @@
 				})).done(function(res) {
 					if (res.status == "success") {
 						
+						$("#errorTextLogin").css( "color", "" );
 						$("#errorTextLogin").text(res.message);
 						$("#errorTextLogin").show();
 						
@@ -210,6 +211,8 @@
 						$("#errorTextLogin").css( "color", "red" );
 						$("#errorTextLogin").text(res.message);
 						$("#errorTextLogin").show();
+            //fix reloadRecaptcha;
+            onloadCallback();
 					}
 				});
 			} else {
@@ -223,6 +226,9 @@
 				}
 				
 				$("#errorTextLogin").show();
+        //fix reloadRecaptcha;
+        onloadCallback();
+
 			}
 		});
 	</script> 
@@ -258,6 +264,8 @@
 					async:true
 				})).done(function(res) {
 					if (res.status == "success") {
+
+						$("#errorTextLogin").css( "color", "" );
 						$("#errorTextRegister").text(res.message);
 						$("#errorTextRegister").show();
 												
@@ -268,6 +276,8 @@
 						$("#errorTextRegister").css( "color", "red" );
 						$("#errorTextRegister").text(res.message);
 						$("#errorTextRegister").show();
+            //fix reloadRecaptcha;
+            onloadCallback();
 					}
 				});
 			}
