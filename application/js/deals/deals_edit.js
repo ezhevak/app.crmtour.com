@@ -1557,7 +1557,7 @@ function on_load() {
 					"<div class='media-body'>" +
 					"<a href='#' <span  class='glyphicon glyphicon-trash' aria-hidden='true' onClick='deleteParticipant(" + res[index].Id + ")'></span></a> "+
 					"<a href='/contacts/add?Id="+res[index].ContactId+"' class='title' target='_blanck'>"+ifnull(res[index].LastName,"") + " " + ifnull(res[index].FirstName,"") + " " + ifnull(res[index].MiddleName,"")  + "</a> - <small>" + ifnull(res[index].DateBirthAge,"") + "</small>"+
-					"<p><strong>Паспорт:</strong> " + ifnull(res[index].docFirstName,"") +" " + ifnull(res[index].docLastName,"") +" </p>" +
+					"<p><strong>Паспорт:</strong> " + ifnull(res[index].docLastName,"") +" " + ifnull(res[index].docFirstName,"") +" </p>" +
 					"<p><strong>Серия номер:</strong> " + ifnull(res[index].docSeriaNum,"") + " " + docBiometric + "</p>" +
 					"<p><strong>Действителен до:</strong> "+ ifnull(res[index].docValid,"")  + "</p>" +
 					"</div>" +
