@@ -55,15 +55,15 @@ var table = $('#datatable-responsive').DataTable( {
 		        "width": "10%"
             },
             { 
-            	"data": "HotelTypeName",
-		        "responsivePriority": 5,
-		        "width": "10%"
-            },
-            { 
             	"data": "HotelName",
             	"render" : editBookingSearch,
 		        "responsivePriority": 2,
 		        "width": "25%"
+            },
+            { 
+            	"data": "HotelTypeName",
+		        "responsivePriority": 5,
+		        "width": "10%"
             },
             { 
             	"data": "ScanExists",
