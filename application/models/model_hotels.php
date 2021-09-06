@@ -81,7 +81,7 @@ class Model_Hotels extends Model
         $db = $mysqli->getConnection();
         
 		$cols = array ("vh.Id","vh.HotelName","vh.DirectionName","vh.RegionName","vh.HotelStarsName","vh.HotelBeachName","vh.HotelRatingName",
-					   "vh.ScanExists","vh.HotelWebSite", "vhd.DealsAmount","vh.HotelRating");
+					   "vh.ScanExists","vh.HotelWebSite", "vhd.DealsAmount","vh.HotelRating","vh.HotelTypeName");
 		$dealsQ = $db->subQuery ("vhd");
 		$dealsQ->get ("vHotelDeals");
 		$db->join($dealsQ, "vh.Id = vhd.HotelId", "LEFT");

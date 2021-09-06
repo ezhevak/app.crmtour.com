@@ -14,6 +14,7 @@
 		        <th>Регион</th>
 		        <th>Booking rating</th>
 		        <th>Booking search</th>
+		        <th>Тип</th>
 		        <th>Карта</th>
 		        <th>Сайт</th>
 		        <th>Сделки</th>
