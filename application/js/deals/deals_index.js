@@ -178,7 +178,7 @@
 			        "width": "1%"
 	            },
 	            { 
-	            	"data": "DealSum",
+	            	"data": "DealSumFact",
 			        "responsivePriority": 9,
 			        "width": "1%"
 	            },

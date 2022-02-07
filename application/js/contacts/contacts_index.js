@@ -93,7 +93,7 @@
 		        //"render":editable
             },
             { 
-            	"responsivePriority": 11,
+            	"responsivePriority": 8,
 		        "width": "25%",
 		        //"render":editable,
 		        "data": "docValid",
@@ -113,7 +113,7 @@
             },
             { 
             	"data": "ManagerName",
-		        "responsivePriority": 8,
+		        "responsivePriority": 11,
 		        "width": "25%",
 		       // "render":editable
             },
