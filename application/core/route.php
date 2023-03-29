@@ -16,10 +16,10 @@ class Route
 
 		$toLoginPage = false;
 		//$toPayPage = false;
-		session_start(); 
-		//if(!isset($_SESSION)){ 
-		//	session_start(); 
-		//} 
+		//session_start(); 
+		if(!isset($_SESSION)){ 
+			session_start(); 
+		} 
 		
 		$GLOBALS['AccId'] = $_SESSION['AccId'];
 		$GLOBALS['AccName'] = $_SESSION['AccName'];
