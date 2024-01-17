@@ -286,7 +286,7 @@
 	</script>
 	<script>
 		$( document ).ready(function() {
-		    $('#Phone').inputmask('+38(099)999-9999');
+		    //$('#Phone').inputmask('+38(099)999-9999');
 		});
 	</script>
 	

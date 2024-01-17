@@ -1,8 +1,8 @@
 function on_load() {
 	
-	$("#HotelPhone").inputmask("+99(999)999-9999");
+	//$("#HotelPhone").inputmask("+99(999)999-9999");
 	
-	$("#HotelFax").inputmask("+99(999)999-9999");
+	//$("#HotelFax").inputmask("+99(999)999-9999");
 	
 };
 

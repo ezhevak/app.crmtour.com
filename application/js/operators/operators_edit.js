@@ -20,7 +20,7 @@ function on_load() {
 
 	//setTimeout(function(){
 	//вфывфыв
-	$("#Phone").inputmask("+99(999)999-9999");
+	//$("#Phone").inputmask("+99(999)999-9999");
 	//},200);
 
 	tinymce.init({

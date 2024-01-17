@@ -31,7 +31,7 @@ $(document).ready(function(){
 	$("#passIssuedDate").inputmask("dd.mm.yyyy");
 	$("#passValidDate").inputmask("dd.mm.yyyy");
 	
-	$("#PhoneMob").inputmask("+39(999)999-9999");
+	//$("#PhoneMob").inputmask("+39(999)999-9999");
 	
 	//$("#passIssuedDate").on("click", function() {
 	//	var new_date = moment(moment($("#passIssuedDate").val(), 'DD.MM.YYYY', false).format()).add(10,'year').format('DD.MM.YYYY');

@@ -292,7 +292,7 @@ if($data[0]["Id"] ==""){
 	<script>
 		function on_load() {
 			$('#editForm').validator();
-			$('#Phone').inputmask('+38(099)999-9999');
+			//$('#Phone').inputmask('+38(099)999-9999');
 
 			$('form').find('*').filter(':input:visible:first').focus();
 			check("Y");

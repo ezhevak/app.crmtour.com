@@ -1,6 +1,6 @@
 function on_load() {
 	
-	$("#EmbassyPhone").inputmask("+99(999)999-9999");
+	//$("#EmbassyPhone").inputmask("+99(999)999-9999");
 	
 	tinymce.init({
 	  selector: 'textarea',

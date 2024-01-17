@@ -1,8 +1,8 @@
 function on_load() {
 	
-	$("#OfficePhone").inputmask("+38(999)999-9999");
-	$("#OfficeFax").inputmask("+38(999)999-9999");
-	$("#OfficeMobile").inputmask("+38(999)999-9999");
+	//$("#OfficePhone").inputmask("+38(999)999-9999");
+	//$("#OfficeFax").inputmask("+38(999)999-9999");
+	//$("#OfficeMobile").inputmask("+38(999)999-9999");
 	
 	
 	$('#LicenseDate').datepicker({

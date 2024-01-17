@@ -1,6 +1,6 @@
 
  
- 	$("#PhoneMob").inputmask("+39(999)999-9999");
+ 	//$("#PhoneMob").inputmask("+39(999)999-9999");
  	  
 	$('#contDateBirth').datepicker({
 		format: "dd.mm.yyyy",

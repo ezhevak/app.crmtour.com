@@ -151,7 +151,7 @@ if($data[0]["Id"] ==""){
 </div>
 	<script>
 		function on_load() {
-			$('#Phone').inputmask('+39(999)999-9999');
+			//$('#Phone').inputmask('+39(999)999-9999');
 			
 			$('input:first').focus();
 		}

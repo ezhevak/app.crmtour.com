@@ -1,7 +1,7 @@
 
 function on_load() {
-	$("#AirportPhone").inputmask("+99(999)999-9999");
-	$("#AirportFax").inputmask("+99(999)999-9999");
+	//$("#AirportPhone").inputmask("+99(999)999-9999");
+	//$("#AirportFax").inputmask("+99(999)999-9999");
 	
 
 	//Подключаем поиск по select

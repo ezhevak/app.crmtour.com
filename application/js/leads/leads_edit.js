@@ -7,7 +7,7 @@ function on_load() {
 	}
 	
 	
-	$("#Phone").inputmask("+39(999)999-9999"); 
+	//$("#Phone").inputmask("+39(999)999-9999"); 
 	$("#LeadDate").inputmask("dd.mm.yyyy");
 	
 	$('#LeadDate').datepicker({
@@ -452,7 +452,7 @@ function on_load() {
 	$("#passIssuedDate").inputmask("dd.mm.yyyy");
 	$("#passValidDate").inputmask("dd.mm.yyyy");
 	
-	$("#PhoneMob").inputmask("+39(999)999-9999");
+	//$("#PhoneMob").inputmask("+39(999)999-9999");
 	
 	
 	$('#UserId').select2({

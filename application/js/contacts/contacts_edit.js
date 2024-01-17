@@ -32,8 +32,8 @@ $(document).ready(function() {
 		enableOnReadonly: false
 	});
 	
-	$("#PhoneMob").inputmask("+39(999)999-9999");
-	$("#PhoneHome").inputmask("+39(999)999-9999");
+	//$("#PhoneMob").inputmask("+39(999)999-9999");
+	//$("#PhoneHome").inputmask("+39(999)999-9999");
 	
 	$("#contDateBirth").inputmask("dd.mm.yyyy");
 	$("#passIssuedDate").inputmask("dd.mm.yyyy");

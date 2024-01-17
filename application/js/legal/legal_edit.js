@@ -1,8 +1,8 @@
 function on_load() {
 	
-	$("#LegalOfficePhone").inputmask("+38(099)999-9999");
-	$("#LegalOfficeFax").inputmask("+38(099)999-9999");
-	$("#LegalOfficeMobile").inputmask("+38(099)999-9999");
+	//$("#LegalOfficePhone").inputmask("+38(099)999-9999");
+	//$("#LegalOfficeFax").inputmask("+38(099)999-9999");
+	//$("#LegalOfficeMobile").inputmask("+38(099)999-9999");
 	
 	$("#LegalDealStart").inputmask("dd.mm.yyyy");
 	$("#LegalDealEnd").inputmask("dd.mm.yyyy");

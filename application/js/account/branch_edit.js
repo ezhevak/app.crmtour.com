@@ -1,8 +1,8 @@
 function on_load() {
 	
-	$("#BranchPhone").inputmask("+38(999)999-9999");
-	$("#BranchFax").inputmask("+38(999)999-9999");
-	$("#BranchMobile").inputmask("+38(999)999-9999");
+	//$("#BranchPhone").inputmask("+38(999)999-9999");
+	//$("#BranchFax").inputmask("+38(999)999-9999");
+	//$("#BranchMobile").inputmask("+38(999)999-9999");
 	
 	$("#BranchLicenseDate").inputmask("dd.mm.yyyy");
 		
