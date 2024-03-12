@@ -89,8 +89,6 @@ function appsendmail($address,$subject,$body) {
 	$mail->CharSet = 'UTF-8';
 
 	$mail->setFrom($GLOBALS['Email'], 'CRM Tour');
-	//zhevak заменил значение на вхлдящую переменну для отправки сообщений на определённый адрес получателя
-	//http://178.150.16.80:3000/issues/36
 	$mail->addAddress($address);
 
 //$mail->addAddress('info@crmtour.com');

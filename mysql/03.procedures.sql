@@ -128,7 +128,7 @@ select cost.AccId as AccId,
 	DATE_ADD(date(CURDATE()),INTERVAL 12 HOUR) as Start,
 	DATE_ADD(date(CURDATE()),INTERVAL 13 HOUR) as End,
 	'Оплата CRM Tour' as Title,
-	concat('Добрый день уважаемый пользователь системы CRM Tour! За предыдущий месяц в системе работало ', ActiveUsers ,'  пользователь(я). Поддержите разработчика и пополните карту Приват банка 5168 7554 3346 0470. Рекомендуемая сумма ',case when ActiveUsers > 3 then ActiveUsers * 100 else ActiveUsers * 120 end, ' грн'
+	concat('Добрый день уважаемый пользователь системы CRM Tour! За предыдущий месяц в системе работало ', ActiveUsers ,'  пользователь(я). Поддержите разработчика и пополните карту Приват банка 5363 5420 1802 9299. Рекомендуемая сумма ',case when ActiveUsers > 3 then ActiveUsers * 100 else ActiveUsers * 120 end, ' грн'
 	) as Title,
 	0 as Done,
 	null as ModelType,

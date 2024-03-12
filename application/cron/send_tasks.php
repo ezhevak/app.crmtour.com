@@ -27,6 +27,7 @@
 			join vUsers as u on (vt.FirstUserId = u.Id and vt.AccId = u.AccId and u.Email !='')
 			where /*vt.AccId = 1
 			  and */vt.SendEmail = 1
+			  and u.Inactive = 0
 			  and vt.Done = 0
 			  and vt.`Start` >=
 				case 
