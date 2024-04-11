@@ -86,7 +86,7 @@ BEGIN
 	join (select dd.AccId, dd.ContactId
 			from Documents as dd
 	      left join AccountOptions as ao on (dd.AccId = ao.AccId and ao.OptionName = 'DayToPassport')
-			where dd.DocENGINE= 'intPass'
+			where dd.DocType= 'intPass'
 			  and dd.Valid = DATE_ADD(DATE(NOW()), INTERVAL case when ifnull(ao.OptionVal,'') = '' then 180 else ao.OptionVal end DAY)) as doc on (cl.AccId = doc.AccId
 	 																				        							     and cl.Id = doc.ContactId);
 
