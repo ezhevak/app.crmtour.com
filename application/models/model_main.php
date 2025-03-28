@@ -90,7 +90,7 @@ class Model_Main extends Model
 		}
 		$db->join("vUsers_materialized as u", "d.UserId = u.Id and d.AccId = u.AccId", "");
 		$db->join("Contacts as c", "d.AccId = c.AccId and d.ContactId = c.Id", "LEFT");
-		$db->join("vOperators as op", "d.OperatorId = op.Id and d.AccId = op.AccId", "LEFT");
+		$db->join("vOperators_materialized as op", "d.OperatorId = op.Id and d.AccId = op.AccId", "LEFT");
 		$db->join("vAirport_materialized as aa", "d.FlightACityArrivalId = aa.Id", "LEFT");
 		$db->join("vAirport_materialized as ad", "d.FlightACityDepartureId = ad.Id", "LEFT");
 		$db->join("vPaymentsGroup_materialized as vpg", "d.AccId = vpg.AccId and d.Id = vpg.DealId and vpg.PayType='income'", "LEFT");
