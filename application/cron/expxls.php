@@ -30,7 +30,7 @@
 	    			 LeadPriorityName as 'Приоритет',
 	    			 ManagerName as 'Менеджер',
 	    			 ContactId as 'Id клиента' 
-	    			from vLeads
+	    			from vLeads_materialized
 	    			 Where AccId = '$AccId'";
 	} else if ($model == "Legal") {
 		$select="select Id as 'Id юр. лица',
@@ -73,7 +73,7 @@
 					 docValid as 'Действителен до',
 					 docIssuedBy as 'Кем выдан',
 					 docbiometric as 'Биометрический'
-				from vContacts
+				from vContacts_materialized
 				where AccId = '$AccId'";
 	} else if ($model == "Deals") {
 		$select="select d.Id as 'Id сделки',
@@ -126,7 +126,7 @@
 		 		 d.AdditionalServices as 'Дополнительные услуги',
 				 part.AmountTourist as 'Кол-во участников',
 				 part.AmountСhild as 'Кол-во участников 0-17 лет'
-		from vDeals as d
+		from vDeals_materialized as d
 		left join (SELECT dp.DealId,
 					    dp.AccId,
 					    count(dp.ContactId) as AmountTourist,

@@ -20,9 +20,9 @@ try {
 	/*По новым клиентам, список менеджеров отображаем только актуальный, а по старым запросам отображаем всех менеджеров.
 	2017/07/06 Жевак Е.В.*/
 	if($data[0]["Id"] !=""){
-		$sql = "SELECT * FROM  `vUsers` where AccId = $AccId order by ManagerName";
+		$sql = "SELECT * FROM  `vUsers_materialized` where AccId = $AccId order by ManagerName";
 	} else {
-		$sql = "SELECT * FROM  `vUsers` where AccId = $AccId and Inactive = 0 order by ManagerName";
+		$sql = "SELECT * FROM  `vUsers_materialized` where AccId = $AccId and Inactive = 0 order by ManagerName";
 	}
 	
 	$result = $conn->query($sql);

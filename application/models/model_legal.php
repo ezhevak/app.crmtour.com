@@ -12,7 +12,7 @@ class Model_legal extends Model
         $db = $mysqli->getConnection();
         $db->where("l.AccId", $_SESSION['AccId']);
 		$db->where("l.Id", $Id);
-		$db->join("vUsers as u", "l.AccId = u.AccId and l.UserId = u.Id", "left");
+		$db->join("vUsers_materialized as u", "l.AccId = u.AccId and l.UserId = u.Id", "left");
 		$cols = array ("l.Id","l.LegalName", "l.TaxNumber","l.LegalCode", "l.TaxForm","l.SignerFIO","l.SignerPosition","l.SignerBasis","l.AccountantFIO","l.VATcertificateNumber",
 					"l.LegalOfficeAddress", "l.LegalFactAddress","l.LegalOfficePhone","l.LegalOfficeFax","l.LegalOfficeMobile","l.LegalOfficeEmail","l.LegalBankName",
 					"l.LegalAccountNum","l.LegalBankIban","l.LegalMFO","l.LegalDealStart","l.LegalDealEnd","l.LegalComments","l.UserId","u.ManagerName");
@@ -132,9 +132,9 @@ class Model_legal extends Model
 				
 		$db->join("dimDirection as dir", "d.DirectionId = dir.Id", "left");
 		$db->join("dimOperators as op", "d.AccId = op.AccId and d.OperatorId = op.Id", "left");	   
-		$db->join("vPaymentsGroup as vpg", "d.AccId = vpg.AccId and d.Id = vpg.DealId and vpg.PayType = 'income'", "left");
+		$db->join("vPaymentsGroup_materialized as vpg", "d.AccId = vpg.AccId and d.Id = vpg.DealId and vpg.PayType = 'income'", "left");
 		
-		$db->join("vUsers as u", "d.AccId = u.AccId and d.UserId = u.Id", "left");
+		$db->join("vUsers_materialized as u", "d.AccId = u.AccId and d.UserId = u.Id", "left");
 //		$db->join("Dictionaries as dt", "d.DealType = dt.LIC and d.AccId = dt.AccId and dt.Lang = u.Lang", "left");
 
 		$db->where('d.AccId', $_SESSION['AccId']);

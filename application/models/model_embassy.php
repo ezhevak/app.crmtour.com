@@ -9,7 +9,7 @@ class Model_Embassy extends Model
 	
 	public function get_row($EmbassyId)
 	{
-		$this->SQL_select = "SELECT * FROM  `vEmbassy` where AccId = ? and Id = ?";
+		$this->SQL_select = "SELECT * FROM  `vEmbassy_materialized` where AccId = ? and Id = ?";
 		$this->SQL_params_types = array('s', 's');
 		$this->SQL_params = array($_SESSION['AccId'], $EmbassyId);
 		
@@ -87,7 +87,7 @@ class Model_Embassy extends Model
         
 		//$cols = array ("Id", "HotelName","DirectionName", "RegionName", "HotelStarsName", "HotelBeachName","HotelRatingName","ScanExists");
 		$db->where('AccId', $_SESSION['AccId']);
-		$json = $db->JsonBuilder()->get("vEmbassy", null, "*");
+		$json = $db->JsonBuilder()->get("vEmbassy_materialized", null, "*");
 		$db->disconnect();
 		
 		header('Content-Type: application/json; charset=utf-8');

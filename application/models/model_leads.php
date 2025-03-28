@@ -17,7 +17,7 @@ class Model_Leads extends Model
         $db->where("AccId", $_SESSION['AccId']);
 		$db->where("Id", $Id);
 		//$cols = array ("Id", "Name","Description", "Status","DocUrl","UserId");
-		$data = $db->get("vLeads", null, "*");
+		$data = $db->get("vLeads_materialized", null, "*");
 		$db->disconnect();
 		//header('Content-Type: application/json; charset=utf-8');
 		return $data;
@@ -41,7 +41,7 @@ class Model_Leads extends Model
 
 	//public function getMVGListJson($conId) {
 	//	$this->SQL_select = "SELECT Id as pickId, ContactId as pickContactId, LegalName as pickLegalName, LegalCode as pickLegalCode, FirstName as pickFirstName, LastName as pickLastName, MiddleName as pickMiddleName
-	//		FROM  `vLegalToContact`
+	//		FROM  `vLegalToContact_materialized`
 	//		WHERE AccId = ?";
 	//	$this->SQL_params_types = array('s');
 	//	$this->SQL_params = array($_SESSION['AccId']);
@@ -53,7 +53,7 @@ class Model_Leads extends Model
 	//	}
 
 	//	$this->SQL_select = "SELECT Id as pickId, ContactId as pickContactId, LegalName as pickLegalName, LegalCode as pickLegalCode, FirstName as pickFirstName, LastName as pickLastName, MiddleName as pickMiddleName
-	//		FROM  `vLegalToContact`
+	//		FROM  `vLegalToContact_materialized`
 	//		WHERE AccId = ? AND ContactId = ?";
 	//	$this->SQL_params_types = array('s', 's');
 	//	$this->SQL_params = array($_SESSION['AccId'], $conId);
@@ -150,7 +150,7 @@ class Model_Leads extends Model
 			$dateEnd = date("Y-m-d", mktime(0, 0, 0, date('m'), date('d'), date('Y')));
 			$db->where("l.LeadDate", array($dateStart,$dateEnd),"between");
 		}
-		$json = $db->JsonBuilder()->get("vLeads as l", null, "l.*");
+		$json = $db->JsonBuilder()->get("vLeads_materialized as l", null, "l.*");
 		$db->disconnect();
 		
 		header('Content-Type: application/json; charset=utf-8');

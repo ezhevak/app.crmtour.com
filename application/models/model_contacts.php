@@ -14,7 +14,7 @@ class Model_Contacts extends Model
         $db->where("AccId", $_SESSION['AccId']);
 		$db->where("Id", $Id);
 		$cols = array ("*");
-		$data = $db->get("vContacts", null, $cols);
+		$data = $db->get("vContacts_materialized", null, $cols);
 		$db->disconnect();
 		//header('Content-Type: application/json; charset=utf-8');
 		return $data;
@@ -41,11 +41,11 @@ class Model_Contacts extends Model
 	}
 
 	public function getListSegmentJson($segment){
-		$this->SQL_select_count = "SELECT count(*) FROM  `vContacts` where AccId = ? and Segment = ?";
+		$this->SQL_select_count = "SELECT count(*) FROM  `vContacts_materialized` where AccId = ? and Segment = ?";
 		$this->SQL_params_types_count = array('s','s');
 		$this->SQL_params_count = array($_SESSION['AccId'],$segment);
 
-		$this->SQL_select = "select * FROM `vContacts` where AccId = ? and Segment = ?";
+		$this->SQL_select = "select * FROM `vContacts_materialized` where AccId = ? and Segment = ?";
 		$this->SQL_params_types = array('s','s');
 		$this->SQL_params = array($_SESSION['AccId'],$segment);
 
@@ -61,7 +61,7 @@ class Model_Contacts extends Model
 
 	public function get_phones_row($contact_id,$type)
 	{
-		$this->SQL_select = "SELECT * FROM  `vAddress`
+		$this->SQL_select = "SELECT * FROM  `vAddress_materialized`
 			where AccId = ? and ContactId = ? and Type = '$type' and LastAdd = 1 and Active = 1";
 		$this->SQL_params_types = array('s', 's');
 		$this->SQL_params = array($_SESSION['AccId'], $contact_id);
@@ -78,7 +78,7 @@ class Model_Contacts extends Model
 
 	public function get_document_row($contact_id)
 	{
-		$this->SQL_select = "SELECT * FROM  `vDocuments`
+		$this->SQL_select = "SELECT * FROM  `vDocuments_materialized`
 			where AccId = ? and ContactId = ? and DocType = 'intPass' and LastAdd =1";
 		$this->SQL_params_types = array('s', 's');
 		$this->SQL_params = array($_SESSION['AccId'], $contact_id);
@@ -102,7 +102,7 @@ class Model_Contacts extends Model
 		$db->where('AccId', $_SESSION['AccId']);
 		$db->where('ContactId', $contactId);
 		
-		$json = $db->JsonBuilder()->get("vLegalToContact", null, $cols);
+		$json = $db->JsonBuilder()->get("vLegalToContact_materialized", null, $cols);
 		$db->disconnect();
 		
 		header('Content-Type: application/json; charset=utf-8');
@@ -113,11 +113,11 @@ class Model_Contacts extends Model
 		
 		
 		
-		//$this->SQL_select_count = "SELECT COUNT(*) AS count	FROM  `vLegalToContact` where AccId = ? and ContactId = ?";
+		//$this->SQL_select_count = "SELECT COUNT(*) AS count	FROM  `vLegalToContact_materialized` where AccId = ? and ContactId = ?";
 		//$this->SQL_params_types_count = array('s','s');
 		//$this->SQL_params_count = array($_SESSION['AccId'],$contactId);
 
-		//$this->SQL_select = "select Id as id, LegalId, LegalName, LegalCode, LinkType as pickLinkType FROM `vLegalToContact` where AccId = ? and ContactId = ?";
+		//$this->SQL_select = "select Id as id, LegalId, LegalName, LegalCode, LinkType as pickLinkType FROM `vLegalToContact_materialized` where AccId = ? and ContactId = ?";
 		//$this->SQL_params_types = array('s','s');
 		//$this->SQL_params = array($_SESSION['AccId'],$contactId);
 
@@ -159,7 +159,7 @@ class Model_Contacts extends Model
 		
 		$db->join("Dictionaries as d", "l.AccId = d.AccId and l.LeadStatus = d.LIC and d.Lang = 'ru_RU'", "");
 		$db->join("Contacts as c",	   "l.AccId = c.AccId and l.ContactId = c.Id", "");
-		$db->join("vUsers as u",	   "l.AccId = u.AccId and l.UserId = u.Id", "");
+		$db->join("vUsers_materialized as u",	   "l.AccId = u.AccId and l.UserId = u.Id", "");
 		$db->join("Dictionaries as p", "l.AccId = p.AccId and l.LeadPriority = p.LIC and d.Lang = 'ru_RU'", "");
 		
 		$json = $db->JsonBuilder()->get("Leads as l", null, $cols);
@@ -243,11 +243,11 @@ class Model_Contacts extends Model
 
 	public function getlist_ContactEmails_Json($ContactId) {
 		//echo $ContactId;
-		$this->SQL_select_count = "SELECT COUNT(*) AS count	FROM `vAddress` where Type in ('EmailHome','EmailWork') and AccId = ? and ContactId = ?";
+		$this->SQL_select_count = "SELECT COUNT(*) AS count	FROM `vAddress_materialized` where Type in ('EmailHome','EmailWork') and AccId = ? and ContactId = ?";
 		$this->SQL_params_types_count = array('s','s');
 		$this->SQL_params_count = array($_SESSION['AccId'], $ContactId);
 
-		$this->SQL_select = "select * FROM `vAddress` where Type in ('EmailHome','EmailWork') and AccId = ? and ContactId = ?";
+		$this->SQL_select = "select * FROM `vAddress_materialized` where Type in ('EmailHome','EmailWork') and AccId = ? and ContactId = ?";
 		$this->SQL_params_types = array('s','s');
 		$this->SQL_params = array($_SESSION['AccId'], $ContactId);
 
@@ -297,14 +297,14 @@ class Model_Contacts extends Model
 					      ifnull(vpg.PayCount,0) as PayCount,
 					      ifnull(vpg.PaySum,0) as PaySum,
 						  case when d.DealSum <= PaySum then 1 else 0 end NotPaidDeal
-				   from vDeals as d
-				   left join vUsers as u on (d.UserId = u.Id and d.AccId = u.AccId)
-				   left join vContacts as vc on (d.AccId = vc.AccId and d.ContactId = vc.Id)
+				   from vDeals_materialized as d
+				   left join vUsers_materialized as u on (d.UserId = u.Id and d.AccId = u.AccId)
+				   left join vContacts_materialized as vc on (d.AccId = vc.AccId and d.ContactId = vc.Id)
 				   left join dimDirection as dir on (d.DirectionId = dir.Id)
 				   left join dimRegion as reg on (d.AccId = reg.AccId and d.RegionId = reg.Id)
 				   left join Dictionaries as dt on (d.DealType = dt.LIC and d.AccId = dt.AccId and dt.Lang = u.Lang)
 				   left join dimOperators as op on (d.AccId = op.AccId and d.OperatorId = op.Id)
-				   left join vPaymentsGroup as vpg on (d.AccId = vpg.AccId and d.Id = vpg.DealId and vpg.PayType = 'income')
+				   left join vPaymentsGroup_materialized as vpg on (d.AccId = vpg.AccId and d.Id = vpg.DealId and vpg.PayType = 'income')
 				   where d.AccId = ? and d.ContactId != 0 and d.ContactId = ?)
 				   
 				   union
@@ -336,17 +336,17 @@ class Model_Contacts extends Model
 					      ifnull(vpg.PayCount,0) as PayCount,
 					      ifnull(vpg.PaySum,0) as PaySum,
 					      case when d.DealSum <= PaySum then 1 else 0 end NotPaidDeal
-					from vDealParticipants as dp
-					left join vDeals as d on (dp.AccId = d.AccId and dp.DealId = d.Id)
-					left join vUsers as u on (d.AccId = u.AccId and d.UserId = u.Id)
-				    left join vContacts as vc on (dp.AccId = vc.AccId and dp.ContactId = vc.Id)
+					from vDealParticipants_materialized as dp
+					left join vDeals_materialized as d on (dp.AccId = d.AccId and dp.DealId = d.Id)
+					left join vUsers_materialized as u on (d.AccId = u.AccId and d.UserId = u.Id)
+				    left join vContacts_materialized as vc on (dp.AccId = vc.AccId and dp.ContactId = vc.Id)
 					left join dimDirection as dir on (d.DirectionId = dir.Id)
 					left join dimRegion as reg on (d.AccId = reg.AccId and d.RegionId = reg.Id)
 					/*Исключаем клиентов которые участники поездки и владельцы сделки*/
 					left join Deals as dd on (dp.DealId = dd.Id and dp.ContactId = dd.ContactId and dp.AccId = dd.AccId)
 					left join Dictionaries as dt on (d.DealType = dt.LIC and d.AccId = dt.AccId and dt.Lang = u.Lang)
 					left join dimOperators as op on (d.AccId = op.AccId and d.OperatorId = op.Id)
-					left join vPaymentsGroup as vpg on (d.AccId = vpg.AccId and d.Id = vpg.DealId and vpg.PayType = 'income')
+					left join vPaymentsGroup_materialized as vpg on (d.AccId = vpg.AccId and d.Id = vpg.DealId and vpg.PayType = 'income')
 					where dd.Id is null and dp.AccId =? and dp.ContactId = ?)";
 		$data = $db->rawQuery($query, $params);
 
@@ -380,10 +380,10 @@ class Model_Contacts extends Model
 
 
 
-		$db->join("vContacts as vc", "d.ContactId = vc.Id and d.AccId = vc.AccId", "LEFT");
-		$db->join("vPaymentsGroup as vpg", "d.AccId = vpg.AccId and d.Id = vpg.DealId and vpg.PayType = 'income'", "LEFT");
+		$db->join("vContacts_materialized as vc", "d.ContactId = vc.Id and d.AccId = vc.AccId", "LEFT");
+		$db->join("vPaymentsGroup_materialized as vpg", "d.AccId = vpg.AccId and d.Id = vpg.DealId and vpg.PayType = 'income'", "LEFT");
 
-		$json = $db->JsonBuilder()->get("vDeals as d", null, $cols);
+		$json = $db->JsonBuilder()->get("vDeals_materialized as d", null, $cols);
 		$db->disconnect();
 
 		header('Content-Type: application/json; charset=utf-8');
@@ -394,11 +394,11 @@ class Model_Contacts extends Model
 	//getlist_ContactAddresses list
 	public function getlist_ContactAddresses_Json($ContactId) {
 		//echo "!!!!!!!!!!!!!".$ContactId;
-		$this->SQL_select_count = "SELECT COUNT(*) AS count	FROM `vAddresses` where AccId = ? and ContactId = ?";
+		$this->SQL_select_count = "SELECT COUNT(*) AS count	FROM `vAddress_materialized` where AccId = ? and ContactId = ?";
 		$this->SQL_params_types_count = array('s','s');
 		$this->SQL_params_count = array($_SESSION['AccId'], $ContactId);
 
-		$this->SQL_select = "SELECT * FROM `vAddresses` where AccId = ? and ContactId = ?";
+		$this->SQL_select = "SELECT * FROM `vAddress_materialized` where AccId = ? and ContactId = ?";
 		$this->SQL_params_types = array('s','s');
 		$this->SQL_params = array($_SESSION['AccId'], $ContactId);
 
@@ -799,7 +799,7 @@ class Model_Contacts extends Model
 //										  select vc.Id as id, '' as pickContactId, vc.LegalName as pickLegalName, vc.LegalCode as pickLegalCode
 //										from  `vLegals` vc
 //										where vc.AccId = ?
-//										and vc.Id not in (select vcc.LegalId from `vLegalToContact` vcc where vcc.AccId = ? and vcc.ContactId = ?)
+//										and vc.Id not in (select vcc.LegalId from `vLegalToContact_materialized` vcc where vcc.AccId = ? and vcc.ContactId = ?)
 //										  ) t  where 1 =1";
 //		 		$this->SQL_params_types_count = array('s','s','s');
 //		 		$this->SQL_params_count = array($_SESSION['AccId'], $_SESSION['AccId'],$conId);
@@ -809,7 +809,7 @@ class Model_Contacts extends Model
 //  select vc.Id as id, '' as pickContactId, vc.LegalName as pickLegalName, vc.LegalCode as pickLegalCode
 //from  `vLegals` vc
 //where vc.AccId = ?
-//and vc.Id not in (select vcc.LegalId from `vLegalToContact` vcc where vcc.AccId = ? and vcc.ContactId = ?)
+//and vc.Id not in (select vcc.LegalId from `vLegalToContact_materialized` vcc where vcc.AccId = ? and vcc.ContactId = ?)
 //  ) t  where 1=1";
 //		 		$this->SQL_params_types = array('s','s','s');
 //		 		$this->SQL_params = array($_SESSION['AccId'],$_SESSION['AccId'], $conId);
@@ -820,7 +820,7 @@ class Model_Contacts extends Model
 //		 		}
 //		 	} else {
 //		 		$this->SQL_select = "select Id as id, ContactId as pickContactId, LegalName as pickLegalName, LegalCode as pickLegalCode, LinkType as pickLinkType
-//		 		from `vLegalToContact` where AccId = ? and ContactId = ?";
+//		 		from `vLegalToContact_materialized` where AccId = ? and ContactId = ?";
 //		 		$this->SQL_params_types = array('s','s');
 //		 		$this->SQL_params = array($_SESSION['AccId'], $conId);
 //		 		$selected_data = null;
@@ -891,7 +891,7 @@ class Model_Contacts extends Model
 //			}
 
 //			$this->SQL_select = "SELECT LegalId as id, ContactId as pickContactId, LegalName as pickLegalName, LegalCode as pickLegalCode
-//				FROM  `vLegalToContact`
+//				FROM  `vLegalToContact_materialized`
 //				WHERE AccId = ? AND ContactId = ?";
 //			$this->SQL_params_types = array('s', 's');
 //			$this->SQL_params = array($_SESSION['AccId'], $conId);
@@ -1135,7 +1135,7 @@ class Model_Contacts extends Model
 		if(!empty($segment)){
 			$db->where("Segment", $segment);
 		}
-		$json = $db->JsonBuilder()->get("vContacts", null, "*");
+		$json = $db->JsonBuilder()->get("vContacts_materialized", null, "*");
 		header('Content-Type: application/json; charset=utf-8');
 		return $json;
 	}
@@ -1152,7 +1152,7 @@ class Model_Contacts extends Model
 		$db->where("DATEDIFF(DATE_FORMAT(DateBirthOriginal, CONCAT(YEAR(CURDATE()),'-%m-%d')), CURDATE())", Array (-1, 30),"between");
 		//$db->orderBy ("DATEDIFF(DATE_FORMAT(DateBirthOriginal, CONCAT(YEAR(CURDATE()),'-%m-%d')), CURDATE())","asc");
 
-		$json = $db->JsonBuilder()->get("vContacts", null, "*");
+		$json = $db->JsonBuilder()->get("vContacts_materialized", null, "*");
 		header('Content-Type: application/json; charset=utf-8');
 		return $json;
 	}
@@ -1499,7 +1499,7 @@ class Model_Contacts extends Model
 		$db->where("(c.FirstName like ? or c.LastName like ? or c.MiddleName like ?)", array('%'.$Search.'%','%'.$Search.'%','%'.$Search.'%'));
 		$db->join("DealParticipants as dp", "c.AccId = dp.AccId and c.Id = dp.ContactId", "LEFT");
 		$db->joinWhere("DealParticipants as dp", "dp.DealId ", $DealId);
-		$db->join("vUsers as u", "c.AccId = u.AccId and c.UserId = u.Id", "LEFT");
+		$db->join("vUsers_materialized as u", "c.AccId = u.AccId and c.UserId = u.Id", "LEFT");
 		
 		//$db->join("Documents as d", "c.AccId = d.AccId and c.Id = d.ContactId ", "LEFT");
 		//$db->joinWhere("Documents as d", "d.DocType = 'intPass'");

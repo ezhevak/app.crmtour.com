@@ -88,12 +88,12 @@ class Model_Main extends Model
 		if($_SESSION['UserRole'] == "user" && GetOption("AllManagerLists",$_SESSION['AccId']) =="0"){
 			$db->where("d.UserId", $_SESSION['UserId']);
 		}
-		$db->join("vUsers as u", "d.UserId = u.Id and d.AccId = u.AccId", "");
+		$db->join("vUsers_materialized as u", "d.UserId = u.Id and d.AccId = u.AccId", "");
 		$db->join("Contacts as c", "d.AccId = c.AccId and d.ContactId = c.Id", "LEFT");
 		$db->join("vOperators as op", "d.OperatorId = op.Id and d.AccId = op.AccId", "LEFT");
-		$db->join("vAirport as aa", "d.FlightACityArrivalId = aa.Id", "LEFT");
-		$db->join("vAirport as ad", "d.FlightACityDepartureId = ad.Id", "LEFT");
-		$db->join("vPaymentsGroup as vpg", "d.AccId = vpg.AccId and d.Id = vpg.DealId and vpg.PayType='income'", "LEFT");
+		$db->join("vAirport_materialized as aa", "d.FlightACityArrivalId = aa.Id", "LEFT");
+		$db->join("vAirport_materialized as ad", "d.FlightACityDepartureId = ad.Id", "LEFT");
+		$db->join("vPaymentsGroup_materialized as vpg", "d.AccId = vpg.AccId and d.Id = vpg.DealId and vpg.PayType='income'", "LEFT");
 		
 		
 		$json = $db->JsonBuilder()->get("Deals as d", null, $cols);
@@ -122,12 +122,12 @@ class Model_Main extends Model
 		}
 		
 		
-		$db->join("vUsers as u", "d.UserId = u.Id and d.AccId = u.AccId", "");
+		$db->join("vUsers_materialized as u", "d.UserId = u.Id and d.AccId = u.AccId", "");
 		$db->join("Contacts as c", "d.AccId = c.AccId and d.ContactId = c.Id", "LEFT");
-		$db->join("vOperators as op", "d.OperatorId = op.Id and d.AccId = op.AccId", "LEFT");
-		$db->join("vAirport as da", "d.FlightBCityArrivalId = da.Id", "LEFT");
-		$db->join("vAirport as dd", "d.FlightBCityDepartureId = dd.Id", "LEFT");
-		$db->join("vPaymentsGroup as vpg", "d.AccId = vpg.AccId and d.Id = vpg.DealId and vpg.PayType='income'", "LEFT");
+		$db->join("vOperators_materialized as op", "d.OperatorId = op.Id and d.AccId = op.AccId", "LEFT");
+		$db->join("vAirport_materialized as da", "d.FlightBCityArrivalId = da.Id", "LEFT");
+		$db->join("vAirport_materialized as dd", "d.FlightBCityDepartureId = dd.Id", "LEFT");
+		$db->join("vPaymentsGroup_materialized as vpg", "d.AccId = vpg.AccId and d.Id = vpg.DealId and vpg.PayType='income'", "LEFT");
 		
 		
 		$json = $db->JsonBuilder()->get("Deals as d", null, $cols);

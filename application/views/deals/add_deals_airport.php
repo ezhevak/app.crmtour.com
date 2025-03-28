@@ -53,9 +53,9 @@ try {
 	//$sql = "SELECT * FROM  `vUsers` where AccId = $AccId order by ManagerName";
 //	echo $data[0]["Id"];
 	if($data[0]["Id"] >0){
-		$sql = "SELECT * FROM  `vUsers` where AccId = $AccId order by ManagerName";
+		$sql = "SELECT * FROM  `vUsers_materialized` where AccId = $AccId order by ManagerName";
 	} else {
-		$sql = "SELECT * FROM  `vUsers` where AccId = $AccId and Inactive = 0 order by ManagerName";
+		$sql = "SELECT * FROM  `vUsers_materialized` where AccId = $AccId and Inactive = 0 order by ManagerName";
 	}
 	
 	
@@ -208,7 +208,7 @@ try {
 
 //Получаем список аэропортов вылета А
 try {
-	$sql = "select * from vAirport order by AirportConcat asc";
+	$sql = "select * from vAirport_materialized order by AirportConcat asc";
 	$result = $conn->query($sql);
 	while( $row = $result->fetch_assoc()){
 

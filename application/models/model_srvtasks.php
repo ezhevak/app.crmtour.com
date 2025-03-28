@@ -25,7 +25,7 @@ class Model_srvtasks extends Model
 		require_once ($GLOBALS['RootDir'].'application/mysql/db.php');
 		$mysqli = database::getInstance();
 		$db = $mysqli->getConnection();
-		$db->join("vUsers u", "s.CreatorId = u.Id", "LEFT");
+		$db->join("vUsers_materialized u", "s.CreatorId = u.Id", "LEFT");
 		$db->join("Account a", "s.AccId = a.Id", "LEFT");
 		$cols = array("s.Id","s.AccId", "s.CreatorId", "s.Start", "s.End", "s.Name","s.Comments", "s.Status", "s.Params", "u.ManagerName","a.Name as AccountName");
 		//$db->where("s.AccId", $_SESSION["AccId"]);

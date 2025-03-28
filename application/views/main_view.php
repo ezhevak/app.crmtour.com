@@ -7,7 +7,7 @@
 	$db->orderBy("AirportConcat","asc");
 	//$db->where('AccId', $_SESSION['AccId']);
 	
-	$airports = $db->get("vAirport", null, $cols);
+	$airports = $db->get("vAirport_materialized", null, $cols);
 	$db->disconnect();
 	for($i = 0; $i < count($airports); $i++){
 		$dim_airports .= "<option selected value='".$airports[$i]['Id']."'>".$airports[$i]['AirportConcat']."</option>";

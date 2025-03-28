@@ -13,7 +13,7 @@ if ($conn->connect_error) {
 try {
 	$AccId =$_SESSION['AccId'];
 
-	$sql = "SELECT * FROM  `vUsers` where AccId = $AccId";
+	$sql = "SELECT * FROM  `vUsers_materialized` where AccId = $AccId";
 	$result = $conn->query($sql);
 	//Можно выбрать менеджера толькоо пользователю с ролью "admin" для остальных пользователя выбрать нельзя
 	if($_SESSION['UserRole'] != 'admin'){

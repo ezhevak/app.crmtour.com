@@ -24,7 +24,7 @@
 			concat('https://app.crmtour.com/tasks/add?Id=',vt.Id) as url,
 			vt.`Start`, vt.End
 			from vTasks as vt
-			join vUsers as u on (vt.FirstUserId = u.Id and vt.AccId = u.AccId and u.Email !='')
+			join vUsers_materialized as u on (vt.FirstUserId = u.Id and vt.AccId = u.AccId and u.Email !='')
 			where /*vt.AccId = 1
 			  and */vt.SendEmail = 1
 			  and u.Inactive = 0

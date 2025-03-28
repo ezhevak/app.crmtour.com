@@ -50,7 +50,7 @@ class Model_tasks extends Model
         
 		$cols = array ("t.Id", "t.Created","t.LastUpdate", "t.CreatorId","t.UserId","t.Start", "t.End",
 					   "t.Title", "t.Task","t.Done", "t.ModelType","t.ModelId","t.FirstUserId", "u.ManagerName");
-		$db->join("vUsers u", "t.FirstUserId = u.Id and t.AccId = u.AccId", "");
+		$db->join("vUsers_materialized u", "t.FirstUserId = u.Id and t.AccId = u.AccId", "");
 		$db->where('t.AccId', $_SESSION['AccId']);
 		if($status!=""){
 			$db->where("t.Done", $status);
@@ -161,7 +161,7 @@ class Model_tasks extends Model
 			$cols = array ("t.Id", "t.CreatorId", "t.UserId", "t.Start as start", "t.End as end","t.Title as title", "t.Task",
 						   "t.Done", "case when Done = 1 then '#1ABB9C' when End < Now() then '#d04a3e' else u.TaskColor end as color","concat('/tasks/add?Id=',t.Id) as url");
 			
-			$db->join("vUsers u", "t.FirstUserId = u.Id and t.AccId = u.AccId", "");
+			$db->join("vUsers_materialized u", "t.FirstUserId = u.Id and t.AccId = u.AccId", "");
 			$db->where('t.AccId', $_SESSION['AccId']);
 			if($_SESSION['UserRole'] != "admin"){
 				$db->where("FIND_IN_SET(".$_SESSION['UserId'].",t.UserId)");

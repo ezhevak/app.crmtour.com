@@ -28,7 +28,7 @@ class Model_Dictionary extends Model
 		$db->where("DirectionId", $directionId);
 		$cols = array ("Id", "DirectionId", "HotelName", "ifnull(HotelStarsName,'') HotelStarsName");
 		
-		$json = $db->JsonBuilder()->get("vHotels", null, $cols);
+		$json = $db->JsonBuilder()->get("vHotels_materialized", null, $cols);
 		$db->disconnect();
 		header('Content-Type: application/json; charset=utf-8');
 		return $json;

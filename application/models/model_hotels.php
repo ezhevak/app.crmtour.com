@@ -14,7 +14,7 @@ class Model_Hotels extends Model
         $db->where("AccId", $_SESSION['AccId']);
 		$db->where("Id", $Id);
 		//$cols = array ("Id", "Name","Description", "Status","DocUrl","UserId");
-		$data = $db->get("vHotels", null, "*");
+		$data = $db->get("vHotels_materialized", null, "*");
 		$db->disconnect();
 		//header('Content-Type: application/json; charset=utf-8');
 		return $data;
@@ -83,11 +83,11 @@ class Model_Hotels extends Model
 		$cols = array ("vh.Id","vh.HotelName","vh.DirectionName","vh.RegionName","vh.HotelStarsName","vh.HotelBeachName","vh.HotelRatingName",
 					   "vh.ScanExists","vh.HotelWebSite", "vhd.DealsAmount","vh.HotelRating","vh.HotelTypeName");
 		$dealsQ = $db->subQuery ("vhd");
-		$dealsQ->get ("vHotelDeals");
+		$dealsQ->get ("vHotelDeals_materialized");
 		$db->join($dealsQ, "vh.Id = vhd.HotelId", "LEFT");
 		
 		$db->where('vh.AccId', $_SESSION['AccId']);
-		$json = $db->JsonBuilder()->get("vHotels vh", null, $cols);
+		$json = $db->JsonBuilder()->get("vHotels_materialized vh", null, $cols);
 		$db->disconnect();
 		
 		header('Content-Type: application/json; charset=utf-8');

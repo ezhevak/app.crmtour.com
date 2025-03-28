@@ -15,7 +15,7 @@ class Model_Documents extends Model
 		$db->where("d.Id", $Id);
 		//$db->join("Documents as u", "l.AccId = u.AccId and l.UserId = u.Id", "left");
 		$cols = array ("*");
-		$data = $db->get("vDocuments d", null, $cols);
+		$data = $db->get("vDocuments_materialized d", null, $cols);
 		
 		$db->disconnect();
 		//header('Content-Type: application/json; charset=utf-8');
@@ -33,7 +33,7 @@ class Model_Documents extends Model
 		$db->where("d.LastAdd", '1');
 		//$db->join("Documents as u", "l.AccId = u.AccId and l.UserId = u.Id", "left");
 		$cols = array ("*");
-		$data = $db->get("vDocuments d", null, $cols);
+		$data = $db->get("vDocuments_materialized d", null, $cols);
 		
 		$db->disconnect();
 		//header('Content-Type: application/json; charset=utf-8');

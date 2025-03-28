@@ -16,7 +16,7 @@ class Model_Address extends Model
         $db->where("a.AccId", $_SESSION['AccId']);
 		$db->where("a.Id", $Id);
 		$cols = array ("*");
-		$data = $db->get("vAddress as a", null, $cols);
+		$data = $db->get("vAddress_materialized as a", null, $cols);
 		$db->disconnect();
 		//header('Content-Type: application/json; charset=utf-8');
 		return $data;

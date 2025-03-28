@@ -12,7 +12,7 @@ class Model_Action extends Model
 		$mysqli = database::getInstance();
         $db = $mysqli->getConnection();
         
-        $db->join("vUsers u", "a.UserId = u.Id", "");
+        $db->join("vUsers_materialized u", "a.UserId = u.Id", "");
         //$db->join("vUsers u", "a.UserId = u.Id", "LEFT");
         $db->where("a.AccId", $_SESSION['AccId']);
 		$db->where("a.Id", $Id);

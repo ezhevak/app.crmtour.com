@@ -9,7 +9,7 @@ class Model_Regions extends Model
 	
 	public function get_row($RegionId)
 	{
-		$this->SQL_select = "SELECT * FROM  `vRegions` where AccId = ? and Id = ?";
+		$this->SQL_select = "SELECT * FROM  `vRegions_materialized` where AccId = ? and Id = ?";
 		$this->SQL_params_types = array('s', 's');
 		$this->SQL_params = array($_SESSION['AccId'], $RegionId);
 		
@@ -72,7 +72,7 @@ class Model_Regions extends Model
         
 		//$cols = array ("Id", "Name","Description", "Created");
 		$db->where('AccId', $_SESSION['AccId']);
-		$json = $db->JsonBuilder()->get("vRegions", null, "*");
+		$json = $db->JsonBuilder()->get("vRegions_materialized", null, "*");
 		$db->disconnect();
 		
 		header('Content-Type: application/json; charset=utf-8');

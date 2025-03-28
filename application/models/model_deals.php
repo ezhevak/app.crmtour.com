@@ -15,7 +15,7 @@ class Model_Deals extends Model
 		$db->where("Id", $Id);
 		
 		//$cols = array ("Id", "Name","Description", "Status","DocUrl","UserId");
-		$data = $db->get("vDeals", null, "*");
+		$data = $db->get("vDeals_materialized", null, "*");
 		$db->disconnect();
 		//header('Content-Type: application/json; charset=utf-8');
 		return $data;
@@ -28,7 +28,7 @@ class Model_Deals extends Model
 		//$cols = array ("Id", "Name","Description", "Created");
 		$db->where('AccId', $_SESSION['AccId']);
 		$db->where('Id', $Id);
-		$json = $db->JsonBuilder()->get("vDeals", null, "*");
+		$json = $db->JsonBuilder()->get("vDeals_materialized", null, "*");
 		$db->disconnect();
 		
 		header('Content-Type: application/json; charset=utf-8');
@@ -104,11 +104,11 @@ class Model_Deals extends Model
 			$db->where("d.UserId",  $_SESSION['UserId']);
 		}
 		
-		$db->join("vContacts as vc", "d.ContactId = vc.Id and d.AccId = vc.AccId", "LEFT");
+		$db->join("vContacts_materialized as vc", "d.ContactId = vc.Id and d.AccId = vc.AccId", "LEFT");
 		$db->join("Legals as l", "d.LegalId = l.Id and d.AccId = l.AccId", "LEFT");
-		$db->join("vPaymentsGroup as vpg", "d.AccId = vpg.AccId and d.Id = vpg.DealId and vpg.PayType = 'income'", "LEFT");
+		$db->join("vPaymentsGroup_materialized as vpg", "d.AccId = vpg.AccId and d.Id = vpg.DealId and vpg.PayType = 'income'", "LEFT");
 		
-		$json = $db->JsonBuilder()->get("vDeals as d", null, $cols);
+		$json = $db->JsonBuilder()->get("vDeals_materialized as d", null, $cols);
 		$db->disconnect();
 		
 		header('Content-Type: application/json; charset=utf-8');
@@ -177,7 +177,7 @@ class Model_Deals extends Model
 									d.OperatorName,
 									d.OperatorInvoceSum
 									from rDeals as d
-									join vContacts	as c on (d.AccId = c.AccId and d.ContactId = c.Id)
+									join vContacts_materialized	as c on (d.AccId = c.AccId and d.ContactId = c.Id)
 									left join dimDirection as dir on (d.DirectionId = dir.Id)
 										where d.AccId=?";
 			$this->SQL_params_types = array('s');
@@ -194,7 +194,7 @@ class Model_Deals extends Model
 										d.OperatorName,
 										d.OperatorInvoceSum
 										from rDeals as d
-										join vContacts	as c on (d.AccId = c.AccId and d.ContactId = c.Id)
+										join vContacts_materialized	as c on (d.AccId = c.AccId and d.ContactId = c.Id)
 										left join dimDirection as dir on (d.DirectionId = dir.Id)
 										where d.AccId=? 
 										  and d.UserId = ?";
@@ -231,7 +231,7 @@ class Model_Deals extends Model
 			$db->where("d.UserId",  $_SESSION['UserId']);
 		}
 		
-		$db->join("vContacts as c", "d.AccId = c.AccId and d.ContactId = c.Id", "");
+		$db->join("vContacts_materialized as c", "d.AccId = c.AccId and d.ContactId = c.Id", "");
 		$db->join("dimDirection as dir", "d.DirectionId = dir.Id", "LEFT");
 		
 		$json = $db->JsonBuilder()->get("rDeals as d", null, $cols);
@@ -272,9 +272,9 @@ class Model_Deals extends Model
 									(inc.PaySum * ((d.DealSum - d.OperatorInvoceSum)/d.DealSum))*(d.Commission/100) as ManagerPremia
 									
 									from rDeals as d
-									join vContacts	as c on (d.AccId = c.AccId and d.ContactId = c.Id)
+									join vContacts_materialized	as c on (d.AccId = c.AccId and d.ContactId = c.Id)
 									left join dimDirection as dir on (d.DirectionId = dir.Id)
-									join vPayments inc on (d.AccId = inc.AccId and d.Id = inc.DealId and inc.PayType = 'income') 
+									join vPayments_materialized inc on (d.AccId = inc.AccId and d.Id = inc.DealId and inc.PayType = 'income') 
 									where d.AccId=?";
 			$this->SQL_params_types = array('s');
 			$this->SQL_params = array($_SESSION['AccId']);
@@ -294,9 +294,9 @@ class Model_Deals extends Model
 									(inc.PaySum * ((d.DealSum - d.OperatorInvoceSum)/d.DealSum))*(d.Commission/100) as ManagerPremia
 									
 									from rDeals as d
-									join vContacts	as c on (d.AccId = c.AccId and d.ContactId = c.Id)
+									join vContacts_materialized	as c on (d.AccId = c.AccId and d.ContactId = c.Id)
 									left join dimDirection as dir on (d.DirectionId = dir.Id)
-									join vPayments inc on (d.AccId = inc.AccId and d.Id = inc.DealId and inc.PayType = 'income') 
+									join vPayments_materialized inc on (d.AccId = inc.AccId and d.Id = inc.DealId and inc.PayType = 'income') 
 									where d.AccId=?
 								      and d.UserId = ?";
 			$this->SQL_params_types = array('s','s');
@@ -534,7 +534,7 @@ class Model_Deals extends Model
 		$db->orderBy("PartCreated","asc");
 		
 		$cols = array ("Id as MVGId", "ContactId as PickContactId","FirstName", "LastName","MiddleName","TaxCode","DateBirth");
-		$data = $db->get("vDealParticipants", null,$cols);
+		$data = $db->get("vDealParticipants_materialized", null,$cols);
 		$db->disconnect();
 		//header('Content-Type: application/json; charset=utf-8');
 		return $data;
@@ -859,7 +859,7 @@ class Model_Deals extends Model
 		$db->where("dp.DealId",$DealId);
 		$db->orderBy('dp.Created', 'DESC');
 		
-		$db->join("vContacts as cl", "dp.AccId = cl.AccId and dp.ContactId = cl.Id", "LEFT");
+		$db->join("vContacts_materialized as cl", "dp.AccId = cl.AccId and dp.ContactId = cl.Id", "LEFT");
 		
 		$json = $db->JsonBuilder()->get("DealParticipants as dp", null, $cols);
 		$db->disconnect();

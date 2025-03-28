@@ -464,7 +464,7 @@ function getUserData($UserId){
 	$db->where("AccId", $_SESSION["AccId"]);
 	$db->where("Id", $UserId);
 	$cols = array("Id", "BranchId","Login", "Role","FirstName","LastName","Phone","Email","Commission","ManagerName","Inactive","TelegramChatId");
-	$data = $db->get("vUsers", null, $cols);
+	$data = $db->get("vUsers_materialized", null, $cols);
 
 	$db->disconnect();
 	//header('Content-Type: application/json; charset=utf-8');

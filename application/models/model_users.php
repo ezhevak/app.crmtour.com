@@ -30,7 +30,7 @@ class Model_Users extends Model
         $db->where('AccId', $_SESSION['AccId']);
         $db->where('ManagerName', null,"is not");
         $db->where('ManagerName', "","!=");
-        $data = $db->get("vUsers",null,$cols);
+        $data = $db->get("vUsers_materialized",null,$cols);
         
 		return $data;	
 		
@@ -46,7 +46,7 @@ class Model_Users extends Model
 		$db->where('u.AccId', $_SESSION['AccId']);
         $db->where('u.Id', "1337","!=");
         $db->where('u.Id', "1","!=");
-		$json = $db->JsonBuilder()->get("vUsers u", null, $cols);
+		$json = $db->JsonBuilder()->get("vUsers_materialized u", null, $cols);
 		$db->disconnect();
 		
 		header('Content-Type: application/json; charset=utf-8');

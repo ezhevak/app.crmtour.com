@@ -36,7 +36,7 @@
 		   DATE_FORMAT(d.FlightBDepartureDate, '%d.%m.%Y %H:%i:%s' ) as FlightBDepartureDate
 	from Deals d
 	join vContacts	as c on (d.AccId = c.AccId and d.ContactId = c.Id)
-	join vUsers as u on (d.UserId = u.Id and d.AccId = u.AccId and u.Email !='')
+	join vUsers_materialized as u on (d.UserId = u.Id and d.AccId = u.AccId and u.Email !='')
 	left join dimOperators as op on (d.AccId = op.AccId and d.OperatorId = op.Id)
 	join AccountOptions as ao on (d.AccId = ao.AccId and ao.OptionName = 'Send_Email_Arrival' and ao.OptionVal = '1')
 	Where d.DateArrival between DATE(NOW()) and DATE_ADD(DATE(NOW()), INTERVAL 1 DAY)";

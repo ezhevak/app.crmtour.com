@@ -13,7 +13,7 @@ class Model_templates extends Model
         //$cols = array ("Type", "Name", "Lang", "LIC", "SubType", "OrderBy", "Active");
         $db->where('AccId', $_SESSION['AccId']);
         $db->where('Id', $Id);
-        $data = $db->get("vTemplates",null,"*");
+        $data = $db->get("vTemplates_materialized",null,"*");
         
 		$db->disconnect();
 		
@@ -28,7 +28,7 @@ class Model_templates extends Model
         
 		$cols = array ("Id", "ModulName","Name", "Active");
 		$db->where('AccId', $_SESSION['AccId']);
-		$json = $db->JsonBuilder()->get("vTemplates", null, $cols);
+		$json = $db->JsonBuilder()->get("vTemplates_materialized", null, $cols);
 		$db->disconnect();
 		
 		header('Content-Type: application/json; charset=utf-8');

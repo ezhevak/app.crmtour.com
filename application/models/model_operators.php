@@ -7,7 +7,7 @@ class Model_Operators extends Model
 		$this->ModelClass = "Operators";
 	}
 	public function get_row($OperatorId){
-		$this->SQL_select = "SELECT * FROM  `vOperators` where AccId = ? and Id = ?";
+		$this->SQL_select = "SELECT * FROM  `vOperators_materialized` where AccId = ? and Id = ?";
 		$this->SQL_params_types = array('s', 's');
 		$this->SQL_params = array($_SESSION['AccId'], $OperatorId);
 		
@@ -95,12 +95,12 @@ class Model_Operators extends Model
         
 		$cols = array ("vp.Id", "vp.Name", "vp.Phone", "vp.Email", "vp.WebSite", "vp.Login", "vp.Pass", "vod.DealsAmount");
 		$dealsQ = $db->subQuery ("vod");
-		$dealsQ->get ("vOperatorDeals");
+		$dealsQ->get ("vOperatorDeals_materialized");
 		
 		$db->join($dealsQ, "vp.Id = vod.OperatorId", "LEFT");
 		
 		$db->where('vp.AccId', $_SESSION['AccId']);
-		$json = $db->JsonBuilder()->get("vOperators vp", null, $cols);
+		$json = $db->JsonBuilder()->get("vOperators_materialized vp", null, $cols);
 		$db->disconnect();
 		
 		header('Content-Type: application/json; charset=utf-8');
@@ -119,7 +119,7 @@ class Model_Operators extends Model
 											dir.directionname as DirectionName, 
 											reg.regionname as RegionName
 										   FROM  Deals as d
-										   left join vUsers as u on (d.UserId = u.Id)
+										   left join vUsers_materialized as u on (d.UserId = u.Id)
 											left join Contacts as vc on (d.ContactId = vc.Id and d.AccId = vc.AccId)
 										   left join Legals as vl on (d.LegalId = vl.Id and d.AccId = vl.AccId)
 											left join dimDirection as dir on (d.directionid = dir.id) 
@@ -134,7 +134,7 @@ class Model_Operators extends Model
 											dir.directionname as DirectionName, 
 											reg.regionname as RegionName
 										   FROM  Deals as d
-										   left join vUsers as u on (d.UserId = u.Id)
+										   left join vUsers_materialized as u on (d.UserId = u.Id)
 											left join Contacts as vc on (d.ContactId = vc.Id and d.AccId = vc.AccId)
 										   left join Legals as vl on (d.LegalId = vl.Id and d.AccId = vl.AccId)
 											left join dimDirection as dir on (d.directionid = dir.id) 
@@ -150,7 +150,7 @@ class Model_Operators extends Model
 											dir.directionname as DirectionName, 
 											reg.regionname as RegionName
 										   FROM  Deals as d
-										   left join vUsers as u on (d.UserId = u.Id)
+										   left join vUsers_materialized as u on (d.UserId = u.Id)
 											left join Contacts as vc on (d.ContactId = vc.Id and d.AccId = vc.AccId)
 										   left join Legals as vl on (d.LegalId = vl.Id and d.AccId = vl.AccId)
 											left join dimDirection as dir on (d.directionid = dir.id) 
@@ -165,7 +165,7 @@ class Model_Operators extends Model
 											dir.directionname as DirectionName, 
 											reg.regionname as RegionName
 										   FROM  Deals as d
-										   left join vUsers as u on (d.UserId = u.Id)
+										   left join vUsers_materialized as u on (d.UserId = u.Id)
 											left join Contacts as vc on (d.ContactId = vc.Id and d.AccId = vc.AccId)
 										   left join Legals as vl on (d.LegalId = vl.Id and d.AccId = vl.AccId)
 											left join dimDirection as dir on (d.directionid = dir.id) 

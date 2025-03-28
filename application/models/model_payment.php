@@ -14,7 +14,7 @@ class Model_Payment extends Model
 		$db->where("Id", $Id);
 		$cols = array ("Id", "DealId","PayType","PaySum","PaySumString","PayDate","PayDateMod","Payer","PayCource","PayEquivalent", "PayCurrency","Comments");
 		//$cols =array("*");
-		$data = $db->get("vPayments", null, $cols);
+		$data = $db->get("vPayments_materialized", null, $cols);
 		$db->disconnect();
 		//header('Content-Type: application/json; charset=utf-8');
 		return $data;
@@ -105,7 +105,7 @@ class Model_Payment extends Model
 		$cols = array ("*");
 		$db->where('AccId', $_SESSION['AccId']);
 		$db->where('DealId', $DealId);
-		$data = $db->get("vPayments", null, $cols);
+		$data = $db->get("vPayments_materialized", null, $cols);
 		$db->disconnect();
 		
 		//header('Content-Type: application/json; charset=utf-8');
@@ -122,7 +122,7 @@ class Model_Payment extends Model
 		$cols = array ("*");
 		$db->where('AccId', $_SESSION['AccId']);
 		$db->where('DealId', $DealId);
-		$json = $db->JsonBuilder()->get("vPayments", null, $cols);
+		$json = $db->JsonBuilder()->get("vPayments_materialized", null, $cols);
 		$db->disconnect();
 		
 		header('Content-Type: application/json; charset=utf-8');
